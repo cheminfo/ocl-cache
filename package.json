@@ -1,0 +1,63 @@
+{
+  "name": "ocl-cache",
+  "version": "0.0.0",
+  "description": "Cache molecule directed information in sqlite3",
+  "main": "./lib/index.js",
+  "module": "./lib-esm/index.js",
+  "types": "./lib/index.d.ts",
+  "keywords": [],
+  "author": "Luc Patiny",
+  "license": "MIT",
+  "files": [
+    "src",
+    "lib",
+    "lib-esm"
+  ],
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "clean": "rimraf lib lib-esm",
+    "eslint": "eslint src --cache",
+    "eslint-fix": "npm run eslint -- --fix",
+    "processSmiles": "npm run tsc-cjs && DEBUG=* node scripts/processSmiles",
+    "processSDF": "npm run tsc-cjs && DEBUG=* node scripts/processSDF",
+    "prepack": "npm run tsc",
+    "prettier": "prettier --check src",
+    "prettier-write": "prettier --write src",
+    "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
+    "test-only": "jest --coverage",
+    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
+    "tsc-cjs": "tsc --project tsconfig.cjs.json",
+    "tsc-esm": "tsc --project tsconfig.esm.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheminfo/ocl-cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cheminfo/ocl-cache/issues"
+  },
+  "homepage": "https://github.com/cheminfo/ocl-cache#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/jest": "^28.1.7",
+    "eslint": "^8.22.0",
+    "eslint-config-cheminfo-typescript": "^11.0.1",
+    "jest": "^28.1.3",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/debug": "^4.1.7",
+    "better-sqlite3": "^7.6.2",
+    "debug": "^4.3.4",
+    "filelist-from": "^0.3.0",
+    "mass-tools": "^0.60.40",
+    "openchemlib": "^8.0.1",
+    "openchemlib-utils": "^2.0.0",
+    "piscina": "^3.2.0",
+    "sdf-parser": "^5.0.2"
+  }
+}
