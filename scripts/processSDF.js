@@ -12,10 +12,8 @@ async function doAll() {
   for (const file of fileList) {
     debug(`Importing: ${file.name}`);
     await appendSDF(await file.text());
-    renameSync(
-      file.webkitRelativePath,
-      file.webkitRelativePath.replace('to_process', 'processed'),
-    );
+    const filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
+    renameSync(filename, filename.replace('to_process', 'processed'));
   }
 }
 
