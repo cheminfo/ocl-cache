@@ -53,7 +53,7 @@
     "@types/debug": "^4.1.7",
     "better-sqlite3": "^7.6.2",
     "debug": "^4.3.4",
-    "filelist-from": "^0.3.0",
+    "filelist-utils": "^0.6.0",
     "mass-tools": "^0.60.40",
     "openchemlib": "^8.0.1",
     "openchemlib-utils": "^2.0.0",
