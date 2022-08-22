@@ -1,7 +1,11 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
 
+const fetch = require('cross-fetch');
 const pAll = require('p-all');
+
+//const server="http://127.0.0.1:20822";
+const server = 'http://eln-master2.epfl.ch:20822';
 
 async function doAll() {
   const smiles = readFileSync(join(__dirname, 'smiles.txt'), 'utf8').split(
@@ -16,15 +20,13 @@ async function doAll() {
   for (let smile of smiles) {
     tasks.push(() => {
       return fetch(
-        `http://127.0.0.1:20822/v1/fromSmiles?smiles=${encodeURIComponent(
-          smile,
-        )}`,
+        `${server}/v1/fromSmiles?smiles=${encodeURIComponent(smile)}`,
       ).then(async (response) => {
         await response.json();
       });
     });
   }
-  await pAll(tasks, { concurrency: 20 });
+  await pAll(tasks, { concurrency: 100 });
   console.timeEnd('smiles');
 }
 

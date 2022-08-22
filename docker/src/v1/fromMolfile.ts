@@ -8,7 +8,7 @@ const debug = debugLibrary('getInfoFromSmiles');
 
 export default function fromMolfile(fastify: FastifyInstance) {
   fastify.get(
-    '/v1/fromSmiles',
+    '/v1/fromMolfile',
     {
       schema: {
         summary: 'Retrieve information from a molfile',

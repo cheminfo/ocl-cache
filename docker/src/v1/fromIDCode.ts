@@ -8,7 +8,7 @@ const debug = debugLibrary('getInfoFromIDCode');
 
 export default function fromSmiles(fastify: FastifyInstance) {
   fastify.get(
-    '/v1/fromSmiles',
+    '/v1/fromIDCode',
     {
       schema: {
         summary: 'Retrieve information from idCode',

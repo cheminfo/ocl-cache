@@ -4,6 +4,8 @@ import fastifySwagger from '@fastify/swagger';
 import Fastify from 'fastify';
 
 import v1 from './v1/v1.js';
+import debugLibrary from 'debug';
+const debug = debugLibrary('server');
 
 async function doAll() {
   const fastify = Fastify({
@@ -42,6 +44,7 @@ async function doAll() {
   await fastify.ready();
   fastify.swagger();
 
+  debug('Listening http://127.0.0.1:20822/');
   fastify.listen({ port: 20822, host: '0.0.0.0' }, (err) => {
     if (err) {
       fastify.log.error(err);
