@@ -1,8 +1,10 @@
-import { Database } from 'better-sqlite3';
+import { Database, Statement } from 'better-sqlite3';
 
-let stmt: any;
+import { MoleculeInfo } from '../MoleculeInfo';
 
-export function insertInfo(info: any, db: Database) {
+let stmt: Statement;
+
+export function insertInfo(info: MoleculeInfo, db: Database) {
   if (!stmt) {
     stmt = db.prepare(
       'INSERT INTO molecules VALUES (@idCode, @mf, @em, @mw, @noStereoID, @noStereoTautomerID, @logS, @logP, @acceptorCount, @donorCount, @rotatableBondCount, @stereoCenterCount, @polarSurfaceArea, @ssIndex)',

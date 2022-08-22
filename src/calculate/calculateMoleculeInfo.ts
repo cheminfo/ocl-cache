@@ -4,8 +4,13 @@ import { Molecule, MoleculeProperties } from 'openchemlib';
 //@ts-expect-error ignore lack of declaration
 import { getMF } from 'openchemlib-utils';
 
-export default function calculateMoleculeInfo(molecule: Molecule): any {
-  const info: any = {};
+import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+
+export default function calculateMoleculeInfo(
+  molecule: Molecule,
+): InternalMoleculeInfo {
+  //@ts-expect-error ignore lack of declaration
+  const info: InternalMoleculeInfo = {};
 
   const mf = getMF(molecule);
   const mfInfo = new MF(mf.mf).getInfo();
@@ -42,7 +47,7 @@ function getSSIndex(molecule: Molecule) {
   return Buffer.from(Uint32Array.from(molecule.getIndex()).buffer);
 }
 
-function appendProperties(molecule: Molecule, info: any) {
+function appendProperties(molecule: Molecule, info: InternalMoleculeInfo) {
   const moleculeProperties = new MoleculeProperties(molecule);
 
   info.logS = moleculeProperties.logS;

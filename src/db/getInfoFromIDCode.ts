@@ -1,6 +1,5 @@
 import { Statement } from 'better-sqlite3';
 import debugLibrary from 'debug';
-import { Molecule } from 'openchemlib';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 import { MoleculeInfo } from '../MoleculeInfo';
@@ -8,15 +7,12 @@ import { MoleculeInfo } from '../MoleculeInfo';
 import getDB from './getDB';
 import { insertMolecule } from './insertMolecule';
 
-const debug = debugLibrary('getInfoFromMolecule');
+const debug = debugLibrary('getInfoFromIDCode');
 
 let stmt: Statement;
 
-export async function getInfoFromMolecule(
-  molecule: Molecule,
-): Promise<MoleculeInfo> {
+export async function getInfoFromIDCode(idCode: string): Promise<MoleculeInfo> {
   const db = getDB();
-  const idCode = molecule.getIDCode();
   if (!stmt) {
     stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
   }

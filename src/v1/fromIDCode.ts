@@ -2,21 +2,21 @@ import debugLibrary from 'debug';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { FastifyInstance } from 'fastify/types/instance';
 
-import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
+import { getInfoFromIDCode } from '../db/getInfoFromIDCode';
 
-const debug = debugLibrary('getInfoFromSmiles');
+const debug = debugLibrary('getInfoFromIDCode');
 
 export default function fromSmiles(fastify: FastifyInstance) {
   fastify.get(
     '/v1/fromSmiles',
     {
       schema: {
-        summary: 'Retrieve information from a SMILES',
+        summary: 'Retrieve information from idCode',
         description: '',
         querystring: {
-          smiles: {
+          idCode: {
             type: 'string',
-            description: 'SMILES',
+            description: 'idCode',
           },
         },
       },
@@ -28,7 +28,7 @@ export default function fromSmiles(fastify: FastifyInstance) {
 async function getInfo(request: FastifyRequest, response: FastifyReply) {
   const body: any = request.query;
   try {
-    const result = await getInfoFromSmiles(body.smiles);
+    const result = await getInfoFromIDCode(body.idCode);
     return await response.send({ result });
   } catch (e: any) {
     debug(`Error: ${e.stack}`);

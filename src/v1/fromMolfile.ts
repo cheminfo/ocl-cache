@@ -2,21 +2,21 @@ import debugLibrary from 'debug';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { FastifyInstance } from 'fastify/types/instance';
 
-import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
+import { getInfoFromMolfile } from '../db/getInfoFromMolfile';
 
 const debug = debugLibrary('getInfoFromSmiles');
 
-export default function fromSmiles(fastify: FastifyInstance) {
+export default function fromMolfile(fastify: FastifyInstance) {
   fastify.get(
     '/v1/fromSmiles',
     {
       schema: {
-        summary: 'Retrieve information from a SMILES',
+        summary: 'Retrieve information from a molfile',
         description: '',
         querystring: {
-          smiles: {
+          molfile: {
             type: 'string',
-            description: 'SMILES',
+            description: 'Molfile',
           },
         },
       },
@@ -28,7 +28,7 @@ export default function fromSmiles(fastify: FastifyInstance) {
 async function getInfo(request: FastifyRequest, response: FastifyReply) {
   const body: any = request.query;
   try {
-    const result = await getInfoFromSmiles(body.smiles);
+    const result = await getInfoFromMolfile(body.molfile);
     return await response.send({ result });
   } catch (e: any) {
     debug(`Error: ${e.stack}`);

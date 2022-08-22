@@ -2,15 +2,19 @@ import { join } from 'path';
 
 import Piscina from 'piscina';
 
+import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+
 const piscina = new Piscina({
   filename: join(__dirname, 'calculateMoleculeInfoFromIDCode.js'),
 });
 
 /**
  * @description Multithread import of compounds
- * @param {*} molecule molecule from pubchem file
- * @returns {Promise} result to be imported
+ * @param idCode
+ * @returns result to be imported
  */
-export default function calculateMoleculeInfoFromIDCodePromise(idCode: string) {
+export default function calculateMoleculeInfoFromIDCodePromise(
+  idCode: string,
+): Promise<InternalMoleculeInfo> {
   return piscina.run(idCode);
 }

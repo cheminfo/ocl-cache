@@ -1,6 +1,6 @@
-import { Database } from 'better-sqlite3';
+import { Database, Statement } from 'better-sqlite3';
 
-let stmt: any;
+let stmt: Statement;
 
 export default function idCodeIsPresent(idCode: string, db: Database) {
   if (!stmt) {
