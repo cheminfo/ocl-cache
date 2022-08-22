@@ -13,9 +13,11 @@ async function doAll() {
 
   for (const file of fileList) {
     debug(`Importing: ${file.name}`);
+    console.time(`Importing: ${file.name}`);
     await appendSmiles(await file.text());
     const filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
     renameSync(filename, filename.replace('to_process', 'processed'));
+    console.timeEnd(`Importing: ${file.name}`);
   }
 }
 

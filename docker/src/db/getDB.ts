@@ -1,11 +1,18 @@
 import { join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 
 import sqLite, { Database } from 'better-sqlite3';
 
 let db: Database;
 
 export default function getDB(): Database {
-  if (!db) db = sqLite(join(__dirname, '../../db.sqlite'));
+  if (!db) {
+    const path = join(__dirname, '../../sqlite/');
+    if (!existsSync(path)) {
+      mkdirSync(path);
+    }
+    db = sqLite(join(path, 'db.sqlite'));
+  }
 
   const sql = `
 CREATE TABLE IF NOT EXISTS molecules (

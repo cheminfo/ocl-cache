@@ -11,6 +11,6 @@ services:
       options:
         max-size: "50m"
     volumes:
-      - ./db.sqlite:/node/db.sqlite
+      - ./sqlite:/node/sqlite
     ports:
       - 127.0.0.1:20822:20822
