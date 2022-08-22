@@ -23,6 +23,7 @@
     "prepack": "npm run tsc",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
+    "server": "node ./lib/server.js",
     "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
     "test-only": "jest --coverage",
     "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
@@ -49,15 +50,21 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "@fastify/cors": "^8.1.0",
+    "@fastify/sensible": "^5.1.0",
+    "@fastify/swagger": "^7.4.1",
     "@types/better-sqlite3": "^7.6.0",
     "@types/debug": "^4.1.7",
     "better-sqlite3": "^7.6.2",
     "debug": "^4.3.4",
+    "fastify": "^4.5.2",
     "filelist-utils": "^0.6.0",
     "mass-tools": "^0.60.40",
+    "nodemon": "^2.0.19",
     "openchemlib": "^8.0.1",
     "openchemlib-utils": "^2.0.0",
+    "p-all": "^3.0.0",
     "piscina": "^3.2.0",
-    "sdf-parser": "^5.0.2"
+    "sdf-parser": "^6.0.0"
   }
 }
