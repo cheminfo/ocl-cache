@@ -58,6 +58,7 @@
     "@types/debug": "^4.1.7",
     "better-sqlite3": "^7.6.2",
     "debug": "^4.3.4",
+    "delay": "^5.0.0",
     "fastify": "^4.5.2",
     "filelist-utils": "^0.7.1",
     "mass-tools": "^0.60.40",

@@ -14,3 +14,19 @@ services:
       - ./sqlite:/node/sqlite
     ports:
       - 127.0.0.1:20822:20822
+
+  process-sdf:
+    build: ./docker
+    #image: ghcr.io/cheminfo/ocl-cache-docker:head
+    restart: always
+    ulimits:
+      core: 0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    volumes:
+      - ./sqlite:/node/sqlite
+      - ./data/sdf:/node/sdf
+      - ./data/smiles:/node/smiles
+    command: npm run processSDF
