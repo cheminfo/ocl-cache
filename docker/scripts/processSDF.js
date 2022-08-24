@@ -13,7 +13,6 @@ async function doAll() {
     debug(`Importing: ${file.name}`);
     await appendSDFStream(file.stream());
     let filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
-    filename = file.webkitRelativePath.replace(/\.gz\/.*$/, '.gz');
     renameSync(filename, filename.replace('to_process', 'processed'));
   }
 }
