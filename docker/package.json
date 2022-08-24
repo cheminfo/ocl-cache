@@ -59,7 +59,7 @@
     "better-sqlite3": "^7.6.2",
     "debug": "^4.3.4",
     "fastify": "^4.5.2",
-    "filelist-utils": "^0.6.0",
+    "filelist-utils": "^0.7.0",
     "mass-tools": "^0.60.40",
     "nodemon": "^2.0.19",
     "openchemlib": "^8.0.1",

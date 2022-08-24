@@ -1,11 +1,13 @@
 import { join } from 'path';
-
+import { cpus } from 'os';
 import Piscina from 'piscina';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 
 const piscina = new Piscina({
   filename: join(__dirname, 'calculateMoleculeInfoFromIDCode.js'),
+  maxThreads: cpus().length / 2,
+  idleTimeout: 10000,
 });
 
 /**

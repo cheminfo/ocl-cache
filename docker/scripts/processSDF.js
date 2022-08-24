@@ -1,18 +1,19 @@
 const { renameSync } = require('fs');
 const { join } = require('path');
 
-const debug = require('debug')('processSmiles');
+const debug = require('debug')('processSDF');
 const { fileListFromPath } = require('filelist-utils');
 
-const { appendSDF } = require('../lib/index.js');
+const { appendSDFStream } = require('../lib/index.js');
 
 async function doAll() {
   const fileList = await fileListFromPath(join(__dirname, '../sdf/to_process'));
 
   for (const file of fileList) {
     debug(`Importing: ${file.name}`);
-    await appendSDF(await file.text());
-    const filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
+    await appendSDFStream(file.stream());
+    let filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
+    filename = file.webkitRelativePath.replace(/\.gz\/.*$/, '.gz');
     renameSync(filename, filename.replace('to_process', 'processed'));
   }
 }
