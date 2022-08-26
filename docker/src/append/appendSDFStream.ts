@@ -15,10 +15,12 @@ const debug = debugLibrary('appendSDF');
 
 export async function appendSDFStream(stream: ReadableStream) {
   const db = getDB();
-  const tasks = [];
+
+  const idCodes: string[] = [];
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;
+  const tasks: Promise<any>[] = []
   debug('Start append');
   for await (let entry of iterator(stream)) {
     counter++;
@@ -27,24 +29,32 @@ export async function appendSDFStream(stream: ReadableStream) {
         `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
       );
     }
+
     const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
     if (idCodeIsPresent(idCode, db)) {
       existingMolecules++;
       continue;
     }
-    tasks.push(() =>
-      calculateMoleculeInfoFromIDCodePromise(idCode).then((info: any) => {
+    tasks.push(
+      calculateMoleculeInfoFromIDCodePromise(idCode).then(info => {
         insertInfo(info, db);
-      }),
-    );
+      })
+    )
+
     newMolecules++;
+
     if (tasks.length > 1000) {
-      await pAll(tasks, { concurrency: cpus().length * 2 });
+
+      await Promise.all(tasks)
+
       debug(`Added ${newMolecules} molecules`);
       tasks.length = 0;
     }
   }
-  await pAll(tasks, { concurrency: cpus().length * 2 });
+
+  await Promise.all(tasks)
+
+
   debug(`Existing molecules: ${existingMolecules}`);
   debug(`New molecules: ${newMolecules}`);
 
