@@ -21,7 +21,12 @@ export default function calculateMoleculeInfo(
 
   info.idCode = molecule.getIDCode();
   info.noStereoID = getNoStereoIDCode(molecule);
-  info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
+
+  if (mfInfo.atoms.C <= 40) {
+    info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
+  } else {
+    info.noStereoTautomerID = info.noStereoID;
+  }
 
   appendProperties(molecule, info);
 
