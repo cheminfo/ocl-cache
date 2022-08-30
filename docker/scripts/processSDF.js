@@ -5,7 +5,7 @@ const delay = require('delay');
 const debug = require('debug')('processSDF');
 const { fileListFromPath } = require('filelist-utils');
 
-const { appendSDFStream } = require('../lib/src/index.js');
+const { appendSDFStream } = require('../lib/index.js');
 
 async function doAll() {
   const fileList = await fileListFromPath(join(__dirname, '../sdf/to_process'));
