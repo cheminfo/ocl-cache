@@ -1,0 +1,6 @@
+{
+  "reject": [
+    "p-all",
+    "typescript"
+  ]
+}
