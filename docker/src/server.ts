@@ -1,10 +1,11 @@
 import fastifyCors from '@fastify/cors';
 import fastifySensible from '@fastify/sensible';
 import fastifySwagger from '@fastify/swagger';
+import debugLibrary from 'debug';
 import Fastify from 'fastify';
 
 import v1 from './v1/v1.js';
-import debugLibrary from 'debug';
+
 const debug = debugLibrary('server');
 
 async function doAll() {

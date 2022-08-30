@@ -1,3 +1,4 @@
+import debugLibrary from 'debug';
 //@ts-expect-error ignore lack of declaration
 import { MF } from 'mass-tools';
 import { Molecule, MoleculeProperties } from 'openchemlib';
@@ -5,6 +6,8 @@ import { Molecule, MoleculeProperties } from 'openchemlib';
 import { getMF } from 'openchemlib-utils';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+
+const debug = debugLibrary('calculateMoleculeInfo');
 
 export default function calculateMoleculeInfo(
   molecule: Molecule,
@@ -26,16 +29,17 @@ export default function calculateMoleculeInfo(
 
   let small = true
   if (mfInfo.atoms) {
-    if (mfInfo.atoms.C > 40) small = false;
+    if (mfInfo.atoms.C > 50) small = false;
   } else if (mfInfo.parts) {
     for (const part of mfInfo.parts) {
-      if (part.atoms.C < 40) small = false;
+      if (part.atoms.C > 50) small = false;
     }
   }
 
   if (small) {
     info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
   } else {
+    debug(`Too big: ${mfInfo.mf}`);
     info.noStereoTautomerID = info.noStereoID;
   }
 
