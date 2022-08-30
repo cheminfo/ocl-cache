@@ -2,6 +2,7 @@ export type MoleculeInfo = {
   mf: string;
   mw: number;
   em: number;
+  charge: number;
   idCode: string;
   noStereoID: string;
   noStereoTautomerID: string;

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS molecules (
   mf data_type TEXT,
   em data_type REAL,
   mw data_type REAL,
+  charge data_type INT,
   noStereoID data_type TEXT,
   noStereoTautomerID data_type TEXT,
   logS data_type REAL,

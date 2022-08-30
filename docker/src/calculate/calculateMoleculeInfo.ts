@@ -13,16 +13,27 @@ export default function calculateMoleculeInfo(
   const info: InternalMoleculeInfo = {};
 
   const mf = getMF(molecule).parts.sort().join('.');
-  const mfInfo = new MF(mf.mf).getInfo();
+
+  const mfInfo = new MF(mf).getInfo();
 
   info.mf = mfInfo.mf;
   info.mw = mfInfo.mass;
   info.em = mfInfo.monoisotopicMass;
+  info.charge = mfInfo.charge
 
   info.idCode = molecule.getIDCode();
   info.noStereoID = getNoStereoIDCode(molecule);
 
-  if (mfInfo.atoms.C <= 40) {
+  let small = true
+  if (mfInfo.atoms) {
+    if (mfInfo.atoms.C > 40) small = false;
+  } else if (mfInfo.parts) {
+    for (const part of mfInfo.parts) {
+      if (part.atoms.C < 40) small = false;
+    }
+  }
+
+  if (small) {
     info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
   } else {
     info.noStereoTautomerID = info.noStereoID;
