@@ -12,7 +12,7 @@ export default function calculateMoleculeInfo(
   //@ts-expect-error ignore lack of declaration
   const info: InternalMoleculeInfo = {};
 
-  const mf = getMF(molecule);
+  const mf = getMF(molecule).parts.sort().join('.');
   const mfInfo = new MF(mf.mf).getInfo();
 
   info.mf = mfInfo.mf;
