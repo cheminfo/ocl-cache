@@ -8,10 +8,11 @@ const { fileListFromPath } = require('filelist-utils');
 const { appendSDFStream } = require('../lib/index.js');
 
 async function doAll() {
-  const fileList = await fileListFromPath(join(__dirname, '../sdf/to_process'));
-
   let wasWaiting = true;
   while (true) {
+    const fileList = await fileListFromPath(
+      join(__dirname, '../sdf/to_process'),
+    );
     for (const file of fileList) {
       wasWaiting = false;
       debug(`Importing: ${file.name}`);
