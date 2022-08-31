@@ -43,18 +43,29 @@ export async function appendSDFStream(stream: ReadableStream) {
 
     if (tasks.length > 1000) {
 
-      await Promise.all(tasks)
+      await promiseAll(tasks)
 
       debug(`Added ${newMolecules} molecules`);
       tasks.length = 0;
     }
   }
 
-  await Promise.all(tasks)
+  await promiseAll(tasks)
 
 
   debug(`Existing molecules: ${existingMolecules}`);
   debug(`New molecules: ${newMolecules}`);
 
   debug('End append');
+}
+
+
+async function promiseAll(tasks: Promise<any>[]) {
+  const results = await Promise.allSettled(tasks);
+  // const fulfilled = results.filter(result => result.status === "fulfilled")
+  const rejected = results.filter(result => result.status === "rejected")
+  for (const entry of rejected) {
+    //@ts-expect-error property should exist
+    debug('Rejected: ' + entry.reason);
+  }
 }
