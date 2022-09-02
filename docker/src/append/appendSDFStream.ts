@@ -28,16 +28,22 @@ export async function appendSDFStream(stream: ReadableStream) {
       );
     }
 
-    const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
-    if (idCodeIsPresent(idCode, db)) {
-      existingMolecules++;
-      continue;
+    try {
+
+      const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
+      if (idCodeIsPresent(idCode, db)) {
+        existingMolecules++;
+        continue;
+      }
+      tasks.push(
+        calculateMoleculeInfoFromIDCodePromise(idCode).then(info => {
+          insertInfo(info, db);
+        })
+      )
+    } catch (e: any) {
+      debug('Error parsing molfile: ' + e.toString())
+      continue
     }
-    tasks.push(
-      calculateMoleculeInfoFromIDCodePromise(idCode).then(info => {
-        insertInfo(info, db);
-      })
-    )
 
     newMolecules++;
 
