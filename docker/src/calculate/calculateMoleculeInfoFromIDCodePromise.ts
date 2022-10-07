@@ -5,7 +5,6 @@ import Piscina from 'piscina';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 
-
 const piscina = new Piscina({
   filename: join(__dirname, 'calculateMoleculeInfoFromIDCode.js'),
   minThreads: cpus().length,
@@ -21,8 +20,7 @@ const piscina = new Piscina({
 export default function calculateMoleculeInfoFromIDCodePromise(
   idCode: string,
 ): Promise<InternalMoleculeInfo> {
+  return piscina.run(idCode);
 
-
-
-  return Promise.resolve().then( () =>  piscina.run(idCode));
+  return Promise.resolve().then(() => piscina.run(idCode));
 }

@@ -18,9 +18,13 @@ export async function appendSmiles(text: string) {
 
     if (idCodeIsPresent(idCode, db)) continue;
     actions.push(
-      calculateMoleculeInfoFromIDCodePromise(idCode).then((info: any) => {
-        insertInfo(info, db);
-      }),
+      calculateMoleculeInfoFromIDCodePromise(idCode)
+        .then((info: any) => {
+          insertInfo(info, db);
+        })
+        .catch((err) => {
+          console.log(err.toString());
+        }),
     );
   }
   debug(`Need to process: ${actions.length} smiles`);

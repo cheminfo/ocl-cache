@@ -18,7 +18,7 @@ export async function appendSDFStream(stream: ReadableStream) {
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;
-  const tasks: Promise<any>[] = []
+  const tasks: Promise<any>[] = [];
   debug('Start append');
   for await (let entry of iterator(stream)) {
     counter++;
@@ -29,35 +29,35 @@ export async function appendSDFStream(stream: ReadableStream) {
     }
 
     try {
-
       const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
       if (idCodeIsPresent(idCode, db)) {
         existingMolecules++;
         continue;
       }
       tasks.push(
-        calculateMoleculeInfoFromIDCodePromise(idCode).then(info => {
-          insertInfo(info, db);
-        })
-      )
+        calculateMoleculeInfoFromIDCodePromise(idCode)
+          .then((info) => {
+            insertInfo(info, db);
+          })
+          .catch((err) => {
+            console.log(err.toString());
+          }),
+      );
     } catch (e: any) {
-      debug('Error parsing molfile: ' + e.toString())
-      continue
+      debug('Error parsing molfile: ' + e.toString());
+      continue;
     }
-
     newMolecules++;
 
     if (tasks.length > 1000) {
-
-      await promiseAll(tasks)
+      await promiseAll(tasks);
 
       debug(`Added ${newMolecules} molecules`);
       tasks.length = 0;
     }
   }
 
-  await promiseAll(tasks)
-
+  await promiseAll(tasks);
 
   debug(`Existing molecules: ${existingMolecules}`);
   debug(`New molecules: ${newMolecules}`);
@@ -65,11 +65,10 @@ export async function appendSDFStream(stream: ReadableStream) {
   debug('End append');
 }
 
-
 async function promiseAll(tasks: Promise<any>[]) {
   const results = await Promise.allSettled(tasks);
   // const fulfilled = results.filter(result => result.status === "fulfilled")
-  const rejected = results.filter(result => result.status === "rejected")
+  const rejected = results.filter((result) => result.status === 'rejected');
   for (const entry of rejected) {
     //@ts-expect-error property should exist
     debug('Rejected: ' + entry.reason);

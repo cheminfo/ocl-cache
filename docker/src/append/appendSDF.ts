@@ -24,9 +24,13 @@ export async function appendSDF(text: string) {
 
     if (idCodeIsPresent(idCode, db)) continue;
     tasks.push(() =>
-      calculateMoleculeInfoFromIDCodePromise(idCode).then((info: any) => {
-        insertInfo(info, db);
-      }),
+      calculateMoleculeInfoFromIDCodePromise(idCode)
+        .then((info: any) => {
+          insertInfo(info, db);
+        })
+        .catch((err) => {
+          console.log(err.toString());
+        }),
     );
   }
   debug(`Need to process: ${tasks.length} smiles`);
