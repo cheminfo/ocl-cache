@@ -11,9 +11,11 @@ const debug = debugLibrary('calculateMoleculeInfo');
 
 export default function calculateMoleculeInfo(
   molecule: Molecule,
+  options: { ignoreTautomer?: boolean } = {},
 ): InternalMoleculeInfo {
   //@ts-expect-error ignore lack of declaration
   const info: InternalMoleculeInfo = {};
+  const { ignoreTautomer = false } = options;
 
   const mf = getMF(molecule).parts.sort().join('.');
 
@@ -22,12 +24,12 @@ export default function calculateMoleculeInfo(
   info.mf = mfInfo.mf;
   info.mw = mfInfo.mass;
   info.em = mfInfo.monoisotopicMass;
-  info.charge = mfInfo.charge
+  info.charge = mfInfo.charge;
 
   info.idCode = molecule.getIDCode();
   info.noStereoID = getNoStereoIDCode(molecule);
 
-  let small = true
+  let small = true;
   if (mfInfo.atoms) {
     if (mfInfo.atoms.C > 50) small = false;
   } else if (mfInfo.parts) {
@@ -37,7 +39,12 @@ export default function calculateMoleculeInfo(
   }
 
   if (small) {
-    info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
+    if (ignoreTautomer) {
+      debug(`Ignore tautomer: ${mfInfo.mf}`);
+      info.noStereoTautomerID = info.noStereoID;
+    } else {
+      info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
+    }
   } else {
     debug(`Too big: ${mfInfo.mf}`);
     info.noStereoTautomerID = info.noStereoID;

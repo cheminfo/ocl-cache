@@ -1,14 +1,19 @@
 import { cpus } from 'os';
 import { join } from 'path';
-
+import { AbortController } from 'abort-controller';
 import Piscina from 'piscina';
+import delay from 'delay';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+import calculateMoleculeInfo from './calculateMoleculeInfo';
+import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode';
+
+const nbCPU = cpus().length;
 
 const piscina = new Piscina({
   filename: join(__dirname, 'calculateMoleculeInfoFromIDCode.js'),
-  minThreads: cpus().length,
-  maxThreads: cpus().length,
+  minThreads: nbCPU,
+  maxThreads: nbCPU,
   idleTimeout: 1000,
 });
 
@@ -17,10 +22,21 @@ const piscina = new Piscina({
  * @param idCode
  * @returns result to be imported
  */
-export default function calculateMoleculeInfoFromIDCodePromise(
+export default async function calculateMoleculeInfoFromIDCodePromise(
   idCode: string,
 ): Promise<InternalMoleculeInfo> {
-  return piscina.run(idCode);
+  const abortController = new AbortController();
+  const timeout = setTimeout(() => abortController.abort(), 60000);
 
-  return Promise.resolve().then(() => piscina.run(idCode));
+  // if in the queue we have over twice the number of cpu we wait
+  while (piscina.queueSize > nbCPU * 2) {
+    await delay(1);
+  }
+  try {
+    const info = await piscina.run(idCode, { signal: abortController.signal });
+    clearTimeout(timeout);
+    return info;
+  } catch (e) {
+    return calculateMoleculeInfoFromIDCode(idCode, { ignoreTautomer: true });
+  }
 }
