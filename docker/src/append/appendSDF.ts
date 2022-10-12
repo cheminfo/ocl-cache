@@ -21,7 +21,7 @@ export async function appendSDF(text: string) {
   debug('Start append');
   for (let entry of entries) {
     const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
-
+    debug('Processing: ' + entry.PUBCHEM_COMPOUND_CID);
     if (idCodeIsPresent(idCode, db)) continue;
     tasks.push(() =>
       calculateMoleculeInfoFromIDCodePromise(idCode)
@@ -33,7 +33,7 @@ export async function appendSDF(text: string) {
         }),
     );
   }
-  debug(`Need to process: ${tasks.length} smiles`);
+  debug(`Need to process: ${tasks.length} entries`);
   await pAll(tasks, { concurrency: cpus().length * 2 });
 
   await Promise.all(tasks);
