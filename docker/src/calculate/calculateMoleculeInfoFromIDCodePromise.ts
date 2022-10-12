@@ -24,7 +24,7 @@ const piscina = new Piscina({
  */
 export default async function calculateMoleculeInfoFromIDCodePromise(
   idCode: string,
-): Promise<InternalMoleculeInfo> {
+): Promise<{ promise: Promise<InternalMoleculeInfo> }> {
   const abortController = new AbortController();
   const timeout = setTimeout(() => abortController.abort(), 60000);
 
@@ -32,11 +32,24 @@ export default async function calculateMoleculeInfoFromIDCodePromise(
   while (piscina.queueSize > nbCPU * 2) {
     await delay(1);
   }
+  let promise;
   try {
-    const info = await piscina.run(idCode, { signal: abortController.signal });
-    clearTimeout(timeout);
-    return info;
+    promise = piscina
+      .run(idCode, { signal: abortController.signal })
+      .then((info) => {
+        clearTimeout(timeout);
+        return info;
+      });
   } catch (e) {
-    return calculateMoleculeInfoFromIDCode(idCode, { ignoreTautomer: true });
+    promise = Promise.resolve(
+      calculateMoleculeInfoFromIDCode(idCode, { ignoreTautomer: true }),
+    );
   }
+  // seems a little bit complex to return an object with a promise but it allows to deal
+  // with 'back pressure'
+  // we will not resolve the promise if this process has to wait because piscina does not have enough space in the queue
+  // by default we only allow 2 times the number of core in the piscina queue
+  return {
+    promise,
+  };
 }
