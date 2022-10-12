@@ -30,7 +30,6 @@ export async function appendSDFStream(stream: ReadableStream) {
     }
 
     try {
-      debug('Get ID code for: ' + entry.PUBCHEM_COMPOUND_CID);
       const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
       if (idCodeIsPresent(idCode, db)) {
         existingMolecules++;
