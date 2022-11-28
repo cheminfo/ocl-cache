@@ -12,9 +12,12 @@ const debug = debugLibrary('getInfoFromMolecule');
 
 let stmt: Statement;
 
+let currentlyOpen = 0;
+
 export async function getInfoFromMolecule(
   molecule: Molecule,
 ): Promise<MoleculeInfo> {
+  currentlyOpen++;
   const db = getDB();
   const idCode = molecule.getIDCode();
   if (!stmt) {
@@ -25,7 +28,10 @@ export async function getInfoFromMolecule(
     debug('in cache');
     return improve(result);
   }
-  return improve(await insertMolecule(idCode, db));
+  const result = await improve(await insertMolecule(idCode, db));
+  currentlyOpen--;
+  debug('Currently open: ' + currentlyOpen);
+  return result;
 }
 
 function improve(data: InternalMoleculeInfo): MoleculeInfo {

@@ -1,0 +1,3 @@
+codecov:
+  # main should be the baseline for reporting
+  branch: main
