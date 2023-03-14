@@ -23,15 +23,15 @@ export async function getInfoFromMolecule(
   if (!stmt) {
     stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
   }
-  const result = stmt.get(idCode);
-  if (result) {
+  const resultFromDB = stmt.get(idCode);
+  if (resultFromDB) {
     debug('in cache');
-    return improve(result);
+    return improve(resultFromDB);
   }
-  const result = await improve(await insertMolecule(idCode, db));
+  const newResult = await improve(await insertMolecule(idCode, db));
   currentlyOpen--;
   debug('Currently open: ' + currentlyOpen);
-  return result;
+  return newResult;
 }
 
 function improve(data: InternalMoleculeInfo): MoleculeInfo {

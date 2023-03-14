@@ -10,7 +10,7 @@ const debug = debugLibrary('server');
 
 async function doAll() {
   const fastify = Fastify({
-    logger: false,
+    logger: true,
   });
 
   fastify.register(fastifyCors, {
