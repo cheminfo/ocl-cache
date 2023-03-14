@@ -2,12 +2,12 @@ const { renameSync } = require('fs');
 const { join } = require('path');
 
 const debug = require('debug')('processSmiles');
-const { fileListFromPath } = require('filelist-utils');
+const { fileCollectionFromPath } = require('filelist-utils');
 
 const { appendSmiles } = require('../lib/index.js');
 
 async function doAll() {
-  const fileList = await fileListFromPath(
+  const fileList = await fileCollectionFromPath(
     join(__dirname, '../smiles/to_process'),
   );
 
@@ -15,7 +15,7 @@ async function doAll() {
     debug(`Importing: ${file.name}`);
     console.time(`Importing: ${file.name}`);
     await appendSmiles(await file.text());
-    const filename = file.webkitRelativePath.replace(/\.zip\/.*$/, '.zip');
+    const filename = file.relativePath.replace(/\.zip\/.*$/, '.zip');
     renameSync(filename, filename.replace('to_process', 'processed'));
     console.timeEnd(`Importing: ${file.name}`);
   }

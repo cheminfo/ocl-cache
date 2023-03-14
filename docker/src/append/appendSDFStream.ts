@@ -16,12 +16,11 @@ const maxTasks = cpus().length * 2;
 export async function appendSDFStream(stream: ReadableStream) {
   const db = getDB();
 
-  const idCodes: string[] = [];
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;
   debug('Start append');
-  for await (let entry of iterator(stream)) {
+  for await (const entry of iterator(stream)) {
     counter++;
     if (counter % 1000 === 0) {
       debug(
@@ -54,14 +53,4 @@ export async function appendSDFStream(stream: ReadableStream) {
   debug(`New molecules: ${newMolecules}`);
 
   debug('End append');
-}
-
-async function promiseAll(tasks: Promise<any>[]) {
-  const results = await Promise.allSettled(tasks);
-  // const fulfilled = results.filter(result => result.status === "fulfilled")
-  const rejected = results.filter((result) => result.status === 'rejected');
-  for (const entry of rejected) {
-    //@ts-expect-error property should exist
-    debug('Rejected: ' + entry.reason);
-  }
 }

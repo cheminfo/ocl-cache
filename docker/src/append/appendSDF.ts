@@ -1,5 +1,3 @@
-import { cpus } from 'os';
-
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 import pAll from 'p-all';
@@ -16,26 +14,41 @@ const debug = debugLibrary('appendSDF');
 
 export async function appendSDF(text: string) {
   const db = getDB();
-  const tasks = [];
+  let existingMolecules = 0;
+  let newMolecules = 0;
+  let counter = 0;
   const entries = parse(text).molecules;
   debug('Start append');
   for (let entry of entries) {
-    const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
-    debug('Processing: ' + entry.PUBCHEM_COMPOUND_CID);
-    if (idCodeIsPresent(idCode, db)) continue;
-    tasks.push(() =>
-      calculateMoleculeInfoFromIDCodePromise(idCode)
-        .then((info: any) => {
+    counter++;
+    if (counter % 1000 === 0) {
+      debug(
+        `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
+      );
+    }
+
+    try {
+      const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
+      if (idCodeIsPresent(idCode, db)) {
+        existingMolecules++;
+        continue;
+      }
+      const { promise } = await calculateMoleculeInfoFromIDCodePromise(idCode);
+      promise
+        .then((info) => {
           insertInfo(info, db);
         })
         .catch((err) => {
           console.log(err.toString());
-        }),
-    );
+        });
+    } catch (e: any) {
+      debug('Error parsing molfile: ' + e.toString());
+      continue;
+    }
+    newMolecules++;
   }
-  debug(`Need to process: ${tasks.length} entries`);
-  await pAll(tasks, { concurrency: cpus().length * 2 });
+  debug(`Existing molecules: ${existingMolecules}`);
+  debug(`New molecules: ${newMolecules}`);
 
-  await Promise.all(tasks);
   debug('End append');
 }

@@ -1,6 +1,7 @@
 import fastifyCors from '@fastify/cors';
 import fastifySensible from '@fastify/sensible';
 import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
 import debugLibrary from 'debug';
 import Fastify from 'fastify';
 
@@ -10,7 +11,7 @@ const debug = debugLibrary('server');
 
 async function doAll() {
   const fastify = Fastify({
-    logger: true,
+    logger: false,
   });
 
   fastify.register(fastifyCors, {
@@ -24,7 +25,6 @@ async function doAll() {
   });
 
   await fastify.register(fastifySwagger, {
-    routePrefix: '/documentation',
     swagger: {
       info: {
         title: 'Cache openchemlib calculation results',
@@ -33,11 +33,14 @@ async function doAll() {
       },
       produces: ['application/json'],
     },
+  });
+
+  await fastify.register(fastifySwaggerUi, {
+    routePrefix: '/documentation',
     uiConfig: {
       docExpansion: 'full',
       deepLinking: false,
     },
-    exposeRoute: true,
   });
 
   v1(fastify);

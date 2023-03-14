@@ -10,24 +10,42 @@ const debug = debugLibrary('appendSmiles');
 
 export async function appendSmiles(text: string) {
   const db = getDB();
-  const actions = [];
   const smilesArray = text.split(/\r?\n/);
+  let existingMolecules = 0;
+  let newMolecules = 0;
+  let counter = 0;
   debug('Start append');
   for (let smiles of smilesArray) {
-    const idCode = Molecule.fromSmiles(smiles).getIDCode();
+    counter++;
+    if (counter % 1000 === 0) {
+      debug(
+        `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
+      );
+    }
 
-    if (idCodeIsPresent(idCode, db)) continue;
-    actions.push(
-      calculateMoleculeInfoFromIDCodePromise(idCode)
-        .then((info: any) => {
+    try {
+      const idCode = Molecule.fromSmiles(smiles).getIDCode();
+      if (idCodeIsPresent(idCode, db)) {
+        existingMolecules++;
+        continue;
+      }
+      const { promise } = await calculateMoleculeInfoFromIDCodePromise(idCode);
+      promise
+        .then((info) => {
           insertInfo(info, db);
         })
         .catch((err) => {
           console.log(err.toString());
-        }),
-    );
+        });
+    } catch (e: any) {
+      debug('Error parsing molfile: ' + e.toString());
+      continue;
+    }
+    newMolecules++;
   }
-  debug(`Need to process: ${actions.length} smiles`);
-  await Promise.all(actions);
+
+  debug(`Existing molecules: ${existingMolecules}`);
+  debug(`New molecules: ${newMolecules}`);
+
   debug('End append');
 }
