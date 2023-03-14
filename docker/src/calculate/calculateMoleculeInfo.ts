@@ -20,7 +20,8 @@ export default function calculateMoleculeInfo(
   const mf = getMF(molecule).parts.sort().join('.');
 
   const mfInfo = new MF(mf).getInfo();
-
+  info.unsaturation = mfInfo.unsaturation;
+  info.atom = mfInfo.atoms;
   info.mf = mfInfo.mf;
   info.mw = mfInfo.mass;
   info.em = mfInfo.monoisotopicMass;
@@ -76,9 +77,11 @@ function getSSIndex(molecule: Molecule) {
 
 function appendProperties(molecule: Molecule, info: InternalMoleculeInfo) {
   const moleculeProperties = new MoleculeProperties(molecule);
-
+  let fragmentMap: never[] = [];
+  let nbFragments = molecule.getFragmentNumbers(fragmentMap, false, false);
   info.logS = moleculeProperties.logS;
   info.logP = moleculeProperties.logP;
+  info.nbFragments = nbFragments;
   info.acceptorCount = moleculeProperties.acceptorCount;
   info.donorCount = moleculeProperties.donorCount;
   info.rotatableBondCount = moleculeProperties.rotatableBondCount;

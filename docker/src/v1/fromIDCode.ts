@@ -6,7 +6,7 @@ import { getInfoFromIDCode } from '../db/getInfoFromIDCode';
 
 const debug = debugLibrary('getInfoFromIDCode');
 
-export default function fromSmiles(fastify: FastifyInstance) {
+export default function fromIDCode(fastify: FastifyInstance) {
   fastify.get(
     '/v1/fromIDCode',
     {
