@@ -12,4 +12,4 @@ COPY tsconfig* /node/
 COPY src /node/src
 COPY scripts /node/scripts
 
-CMD DEBUG=* npm start
+CMD npm start
