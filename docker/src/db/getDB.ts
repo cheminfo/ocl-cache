@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS molecules (
   logS data_type REAL,
   nbFragments data_type INT,
   unsaturation data_type INT,
-  atom data_type OBJECT,
+  atoms data_type TEXT,
   logP data_type REAL,
   acceptorCount data_type INT,
   donorCount data_type INT,

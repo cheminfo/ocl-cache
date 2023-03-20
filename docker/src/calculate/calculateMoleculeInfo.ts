@@ -21,7 +21,7 @@ export default function calculateMoleculeInfo(
 
   const mfInfo = new MF(mf).getInfo();
   info.unsaturation = mfInfo.unsaturation;
-  info.atom = mfInfo.atoms;
+  info.atoms = mfInfo.atoms;
   info.mf = mfInfo.mf;
   info.mw = mfInfo.mass;
   info.em = mfInfo.monoisotopicMass;
