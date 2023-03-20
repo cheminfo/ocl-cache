@@ -5,7 +5,6 @@ import Piscina from 'piscina';
 import delay from 'delay';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
-import calculateMoleculeInfo from './calculateMoleculeInfo';
 import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode';
 
 const nbCPU = cpus().length;
