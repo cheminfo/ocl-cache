@@ -27,16 +27,16 @@ CREATE TABLE IF NOT EXISTS molecules (
   noStereoID data_type TEXT,
   noStereoTautomerID data_type TEXT,
   logS data_type REAL,
-  nbFragments data_type INT,
-  unsaturation data_type INT,
-  atoms data_type TEXT,
   logP data_type REAL,
   acceptorCount data_type INT,
   donorCount data_type INT,
   rotatableBondCount data_type INT,
   stereoCenterCount data_type INT,
   polarSurfaceArea data_type REAL,
-  ssIndex data_type BLOB
+  ssIndex data_type BLOB,
+  nbFragments data_type INT,
+  unsaturation data_type INT,
+  atoms data_type TEXT
 );
 `;
 
