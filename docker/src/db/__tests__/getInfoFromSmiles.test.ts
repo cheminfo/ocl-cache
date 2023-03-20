@@ -1,10 +1,13 @@
 import { getInfoFromSmiles } from '../getInfoFromSmiles';
-
-test('getInfoFromSmiles', () => {
-  const result = getInfoFromSmiles('CCCC');
+import { test, expect } from 'vitest';
+test('getInfoFromSmiles', async () => {
+  const result = await getInfoFromSmiles('CCCC');
+  console.log(result);
   expect(result).toMatchInlineSnapshot(`
-    Object {
+    {
       "acceptorCount": 0,
+      "atoms": "{\\"C\\":4,\\"H\\":10}",
+      "charge": 0,
       "donorCount": 0,
       "em": 58.0782503223,
       "idCode": "gC\`@Dij@@",
@@ -12,11 +15,12 @@ test('getInfoFromSmiles', () => {
       "logS": -1.5239999890327454,
       "mf": "C4H10",
       "mw": 58.12235112749877,
+      "nbFragments": 1,
       "noStereoID": "gC\`@Dij@Os@",
       "noStereoTautomerID": "gC\`@Dij@@",
       "polarSurfaceArea": 0,
       "rotatableBondCount": 1,
-      "ssIndex": Array [
+      "ssIndex": [
         0,
         0,
         128,
@@ -83,6 +87,7 @@ test('getInfoFromSmiles', () => {
         0,
       ],
       "stereoCenterCount": 0,
+      "unsaturation": 0,
     }
   `);
 });
