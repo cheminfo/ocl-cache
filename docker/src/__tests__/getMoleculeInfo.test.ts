@@ -1,13 +1,14 @@
 import { Molecule } from 'openchemlib';
 
 import calculateMoleculeInfo from '../calculate/calculateMoleculeInfo';
-
+import { test, expect } from 'vitest';
 test('calculateMoleculeInfo', () => {
   const molecule = Molecule.fromSmiles('CCC(=O)C[13CH3].[Cl-]');
   const info = calculateMoleculeInfo(molecule);
   expect(info).toMatchInlineSnapshot(`
     {
       "acceptorCount": 1,
+      "atoms": "[{\\"C\\":5,\\"H\\":10,\\"O\\":1},{\\"Cl\\":1}]",
       "charge": -1,
       "donorCount": 0,
       "em": 122.04537245894,
@@ -16,6 +17,7 @@ test('calculateMoleculeInfo', () => {
       "logS": -1.4459999836981297,
       "mf": "C4[13C]H10O.Cl(-1)",
       "mw": 122.57804846949503,
+      "nbFragments": 2,
       "noStereoID": "gOQIBxa|e\\\\eS@FI[C|p",
       "noStereoTautomerID": "gOQIHH\`\\\\\`lmU@\\\\RvE\\\\LSBq~drUL_CGpp",
       "polarSurfaceArea": 17.06999969482422,
@@ -90,6 +92,7 @@ test('calculateMoleculeInfo', () => {
         "type": "Buffer",
       },
       "stereoCenterCount": 0,
+      "unsaturation": 1,
     }
   `);
 });
@@ -100,6 +103,10 @@ test('calculateMoleculeInfo CCC', () => {
   expect(info).toMatchInlineSnapshot(`
     {
       "acceptorCount": 0,
+      "atoms": {
+        "C": 3,
+        "H": 8,
+      },
       "charge": 0,
       "donorCount": 0,
       "em": 44.06260025784,
@@ -108,6 +115,7 @@ test('calculateMoleculeInfo CCC', () => {
       "logS": -1.2539999783039093,
       "mf": "C3H8",
       "mw": 44.095733722651964,
+      "nbFragments": 1,
       "noStereoID": "eM@Hz@L@",
       "noStereoTautomerID": "eM@Hz@",
       "polarSurfaceArea": 0,
@@ -182,6 +190,7 @@ test('calculateMoleculeInfo CCC', () => {
         "type": "Buffer",
       },
       "stereoCenterCount": 0,
+      "unsaturation": 0,
     }
   `);
 });

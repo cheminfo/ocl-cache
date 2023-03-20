@@ -2,7 +2,6 @@ import { getInfoFromSmiles } from '../getInfoFromSmiles';
 import { test, expect } from 'vitest';
 test('getInfoFromSmiles', async () => {
   const result = await getInfoFromSmiles('CCCC');
-  console.log(result);
   expect(result).toMatchInlineSnapshot(`
     {
       "acceptorCount": 0,
