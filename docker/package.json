@@ -43,14 +43,14 @@
     "@babel/plugin-transform-modules-commonjs": "^7.21.2",
     "@babel/preset-typescript": "^7.21.0",
     "@types/jest": "^29.5.0",
-    "@vitest/coverage-c8": "^0.29.3",
+    "@vitest/coverage-c8": "^0.29.7",
     "eslint": "^8.36.0",
     "eslint-config-cheminfo-typescript": "^11.3.1",
-    "prettier": "^2.8.5",
+    "prettier": "^2.8.6",
     "rimraf": "^4.4.0",
     "typescript": "^5.0.2",
-    "vite": "^4.2.0",
-    "vitest": "^0.29.3"
+    "vite": "^4.2.1",
+    "vitest": "^0.29.7"
   },
   "dependencies": {
     "@fastify/cors": "^8.2.1",
@@ -64,7 +64,7 @@
     "delay": "^5.0.0",
     "fastify": "^4.15.0",
     "filelist-utils": "^1.8.0",
-    "mass-tools": "^1.1.1",
+    "mass-tools": "^1.2.0",
     "nodemon": "^2.0.21",
     "openchemlib": "^8.2.0",
     "openchemlib-utils": "^2.4.0",
