@@ -24,20 +24,10 @@ export default function calculateMoleculeInfo(
   info.mw = mfInfo.mass;
   info.em = mfInfo.monoisotopicMass;
   info.charge = mfInfo.charge;
-  // This is a workaround for the fact that we didn't consider structures with more than 1 fragment
-  if (mfInfo.parts?.length > 0) {
-    let atoms = [];
-    let unsaturation = [];
-    for (let part of mfInfo.parts) {
-      atoms.push(part.atoms);
-      unsaturation.push(part.unsaturation);
-    }
-    info.atoms = JSON.stringify(atoms);
-    info.unsaturation = Math.max(...unsaturation);
-  } else {
-    info.atoms = mfInfo.atoms;
-    info.unsaturation = mfInfo.unsaturation;
-  }
+
+  info.atoms = mfInfo.atoms;
+  info.unsaturation = mfInfo.unsaturation;
+
   info.idCode = molecule.getIDCode();
   info.noStereoID = getNoStereoIDCode(molecule);
 
