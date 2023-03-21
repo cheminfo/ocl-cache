@@ -1,4 +1,5 @@
 import { join } from 'path';
+import { exit } from 'process';
 
 import sqLite from 'better-sqlite3';
 
@@ -16,7 +17,8 @@ export default async function insertMissingData() {
     const { idCode, mf, nbFragments } = molecule;
     // the hard limit of promises is 2 milions
     // if nbFragments is a number continue
-    if (typeof nbFragments === 'number') {
+    // if(typeof nbFragments === 'number'){
+    if (Number(nbFragments) === 1) {
       counter++;
       continue;
     }
@@ -28,19 +30,23 @@ export default async function insertMissingData() {
     }
     actions.push(
       improve(idCode, mf).then((result) => {
-        const { nbFragments, unsaturation, atoms } = result;
+        // const { nbFragments, unsaturation, atoms } = result;
+        const { unsaturation, atoms } = result;
+        //   'UPDATE molecules SET nbFragments = ?, unsaturation = ?, atoms = ? WHERE idCode = ?',
         db.prepare(
-          'UPDATE molecules SET nbFragments = ?, unsaturation = ?, atoms = ? WHERE idCode = ?',
-        ).run(nbFragments, unsaturation, atoms, idCode);
+          'UPDATE molecules SET unsaturation = ?, atoms = ? WHERE idCode = ?',
+        ).run(unsaturation, atoms, idCode);
       }),
     );
   }
   await Promise.all(actions);
+  return counter;
 }
 export function getDB() {
   let db;
   // get __dirname
-  const __dirname = '/usr/local/docker/ocl-cache-docker/sqlite';
+  const __dirname = '../sqlite/';
+  // const __dirname = '/usr/local/docker/ocl-cache-docker/sqlite';
   if (!db) {
     db = sqLite(join(__dirname, 'db.sqlite'));
     // https://www.sqlite.org/wal.html
@@ -58,16 +64,16 @@ export function getDB() {
     noStereoID data_type TEXT,
     noStereoTautomerID data_type TEXT,
     logS data_type REAL,
-    nbFragments data_type INT,
-    unsaturation data_type INT,
-    atoms data_type TEXT,
     logP data_type REAL,
     acceptorCount data_type INT,
     donorCount data_type INT,
     rotatableBondCount data_type INT,
     stereoCenterCount data_type INT,
     polarSurfaceArea data_type REAL,
-    ssIndex data_type BLOB
+    ssIndex data_type BLOB,
+    nbFragments data_type INT,
+    unsaturation data_type INT,
+    atoms data_type TEXT
   );
   `;
 
@@ -75,4 +81,7 @@ export function getDB() {
   return db;
 }
 
-await insertMissingData();
+const count = await insertMissingData();
+console.log(`updated ${count} molecules`);
+// stop script
+exit(0);
