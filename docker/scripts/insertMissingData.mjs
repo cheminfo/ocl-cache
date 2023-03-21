@@ -45,8 +45,8 @@ export default async function insertMissingData() {
 export function getDB() {
   let db;
   // get __dirname
-  const __dirname = '../sqlite/';
-  // const __dirname = '/usr/local/docker/ocl-cache-docker/sqlite';
+  //const __dirname = '../sqlite/';
+  const __dirname = '/usr/local/docker/ocl-cache-docker/sqlite';
   if (!db) {
     db = sqLite(join(__dirname, 'db.sqlite'));
     // https://www.sqlite.org/wal.html
