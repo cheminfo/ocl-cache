@@ -8,7 +8,12 @@ test('calculateMoleculeInfo', () => {
   expect(info).toMatchInlineSnapshot(`
     {
       "acceptorCount": 1,
-      "atoms": "[{\\"C\\":5,\\"H\\":10,\\"O\\":1},{\\"Cl\\":1}]",
+      "atoms": {
+        "C": 5,
+        "Cl": 1,
+        "H": 10,
+        "O": 1,
+      },
       "charge": -1,
       "donorCount": 0,
       "em": 122.04537245894,
@@ -92,7 +97,7 @@ test('calculateMoleculeInfo', () => {
         "type": "Buffer",
       },
       "stereoCenterCount": 0,
-      "unsaturation": 1,
+      "unsaturation": 2,
     }
   `);
 });
