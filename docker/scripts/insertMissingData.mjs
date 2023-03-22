@@ -84,4 +84,5 @@ export function getDB() {
 const count = await insertMissingData();
 console.log(`updated ${count} molecules`);
 // stop script
-exit(0);
+
+//exit(0);
