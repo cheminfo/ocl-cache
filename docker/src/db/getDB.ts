@@ -15,6 +15,7 @@ export default function getDB(): Database {
     // https://www.sqlite.org/wal.html
     // Activating WAL mode allows to get a speed improvement of 100x !!!
     db.pragma('journal_mode = WAL');
+    db.pragma('journal_size_limit=100000000'); // 100MB
   }
 
   const sql = `
