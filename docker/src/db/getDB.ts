@@ -24,7 +24,6 @@ export default function getDB(): Database {
       if (err) {
         if (err.code !== 'ENOENT') throw err;
       } else if (stat.size > 100000000) {
-        debug(stat);
         db.pragma('wal_checkpoint(RESTART)');
         debug('Restarted wal file');
       }
