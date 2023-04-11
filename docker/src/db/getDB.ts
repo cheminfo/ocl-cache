@@ -16,9 +16,8 @@ export default function getDB(): Database {
     // https://www.sqlite.org/wal.html
     // Activating WAL mode allows to get a speed improvement of 100x !!!
     db.pragma('journal_mode = WAL');
-    //   db.pragma('journal_size_limit=100000000'); // This will start overwriting the oldest entries in the WAL file when it reaches 100MB //  db.pragma('wal_checkpoint(TRUNCATE)');
   }
-  // check size every 5 seconds
+
   setInterval(() => {
     fs.stat(join(path, 'db.sqlite-wal'), (err, stat) => {
       if (err) {
