@@ -28,7 +28,7 @@ export default function getDB(): Database {
         debug('Restarted wal file');
       }
     });
-  }, 5000).unref();
+  }, 300000).unref();
 
   const sql = `
 CREATE TABLE IF NOT EXISTS molecules (
