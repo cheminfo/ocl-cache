@@ -60,8 +60,8 @@ export default function calculateMoleculeInfo(
 }
 
 function getNoStereoIDCode(molecule: Molecule) {
-  const OCL = molecule.getOCL();
-  return OCL.CanonizerUtil.getIDCode(molecule, OCL.CanonizerUtil.NOSTEREO);
+  molecule.stripStereoInformation();
+  return molecule.getIDCode();
 }
 
 function getNoStereoTautomerIDCode(molecule: Molecule) {

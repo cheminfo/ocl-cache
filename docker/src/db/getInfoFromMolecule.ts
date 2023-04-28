@@ -28,6 +28,6 @@ export async function getInfoFromMolecule(
   return improve(await insertMolecule(idCode, db));
 }
 
-function improve(data: InternalMoleculeInfo): MoleculeInfo {
+function improve(data: any): MoleculeInfo {
   return { ...data, ssIndex: Array.from(new Uint32Array(data.ssIndex)) };
 }
