@@ -1,8 +1,8 @@
-import { existsSync, mkdirSync } from 'fs';
+import fs, { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 import sqLite, { Database } from 'better-sqlite3';
-import fs from 'fs';
+
 let db: Database;
 
 export default function getDB(): Database {

@@ -42,7 +42,7 @@ export async function appendSDF(text: string) {
           console.log(err.toString());
         });
     } catch (e: any) {
-      debug('Error parsing molfile: ' + e.toString());
+      debug(`Error parsing molfile: ${e.toString()}`);
       continue;
     }
     newMolecules++;

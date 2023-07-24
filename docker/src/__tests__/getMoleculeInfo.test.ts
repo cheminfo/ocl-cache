@@ -1,7 +1,8 @@
 import { Molecule } from 'openchemlib';
+import { test, expect } from 'vitest';
 
 import calculateMoleculeInfo from '../calculate/calculateMoleculeInfo';
-import { test, expect } from 'vitest';
+
 test('calculateMoleculeInfo', () => {
   const molecule = Molecule.fromSmiles('CCC(=O)C[13CH3].[Cl-]');
   const info = calculateMoleculeInfo(molecule);

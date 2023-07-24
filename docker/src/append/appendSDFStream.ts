@@ -1,6 +1,7 @@
+import { cpus } from 'os';
+
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
-import { cpus } from 'os';
 
 //@ts-expect-error sdf-parser is not typed
 import { iterator } from 'sdf-parser';
@@ -43,7 +44,7 @@ export async function appendSDFStream(stream: ReadableStream) {
           console.log(err.toString());
         });
     } catch (e: any) {
-      debug('Error parsing molfile: ' + e.toString());
+      debug(`Error parsing molfile: ${e.toString()}`);
       continue;
     }
     newMolecules++;

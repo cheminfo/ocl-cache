@@ -1,10 +1,12 @@
 import { cpus } from 'os';
 import { join } from 'path';
+
 import { AbortController } from 'abort-controller';
-import Piscina from 'piscina';
 import delay from 'delay';
+import Piscina from 'piscina';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+
 import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode';
 
 const nbCPU = cpus().length;

@@ -1,6 +1,8 @@
 import { Database, Statement } from 'better-sqlite3';
+
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise';
+
 let stmt: Statement;
 
 export async function insertMolecule(

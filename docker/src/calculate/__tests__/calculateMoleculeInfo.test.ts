@@ -1,8 +1,11 @@
-import { Molecule } from 'openchemlib';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import calculateMoleculeInfoFromIDCode from '../calculateMoleculeInfoFromIDCode';
+
+import { Molecule } from 'openchemlib';
 import { test, expect } from 'vitest';
+
+import calculateMoleculeInfoFromIDCode from '../calculateMoleculeInfoFromIDCode';
+
 const molfile = readFileSync(join(__dirname, 'molfile.txt'), 'utf8');
 
 test('should first', () => {
