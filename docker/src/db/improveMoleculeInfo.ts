@@ -1,7 +1,10 @@
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 import { MoleculeInfo } from '../MoleculeInfo';
+import Debug from 'debug';
 
-export function improve(data: InternalMoleculeInfo): MoleculeInfo {
+const debug = Debug('improveMoleculeInfo');
+
+export function improveMoleculeInfo(data: InternalMoleculeInfo): MoleculeInfo {
   return {
     ...data,
     atoms: JSON.parse(data.atoms),

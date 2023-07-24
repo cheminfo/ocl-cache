@@ -1,12 +1,12 @@
 import { Statement } from 'better-sqlite3';
 import debugLibrary from 'debug';
 
+import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 import { MoleculeInfo } from '../MoleculeInfo';
 
 import getDB from './getDB';
-import { improve } from './improve';
+import { improveMoleculeInfo } from './improveMoleculeInfo';
 import { insertMolecule } from './insertMolecule';
-import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 
 const debug = debugLibrary('getInfoFromIDCode');
 
@@ -20,7 +20,7 @@ export async function getInfoFromIDCode(idCode: string): Promise<MoleculeInfo> {
   const resultFromDB = stmt.get(idCode);
   if (resultFromDB) {
     debug('in cache');
-    return improve(resultFromDB as InternalMoleculeInfo);
+    return improveMoleculeInfo(resultFromDB as InternalMoleculeInfo);
   }
-  return improve(await insertMolecule(idCode, db));
+  return improveMoleculeInfo(await insertMolecule(idCode, db));
 }

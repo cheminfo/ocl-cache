@@ -1,4 +1,4 @@
-export type MoleculeInfo = {
+export interface MoleculeInfo {
   mf: string;
   mw: number;
   em: number;
@@ -17,4 +17,4 @@ export type MoleculeInfo = {
   nbFragments: number;
   unsaturation: number;
   atoms: string;
-};
+}

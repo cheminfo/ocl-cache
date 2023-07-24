@@ -1,5 +1,6 @@
 {
   "reject": [
-    "p-all"
+    "p-all",
+    "delay"
   ]
 }

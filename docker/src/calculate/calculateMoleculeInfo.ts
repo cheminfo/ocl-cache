@@ -85,7 +85,7 @@ function appendProperties(molecule: Molecule, info: InternalMoleculeInfo) {
   info.rotatableBondCount = moleculeProperties.rotatableBondCount;
   info.stereoCenterCount = moleculeProperties.stereoCenterCount;
   info.polarSurfaceArea = moleculeProperties.polarSurfaceArea;
-  let fragmentMap: any[] = [];
-  let nbFragments = molecule.getFragmentNumbers(fragmentMap, false, false);
+  const fragmentMap: any[] = [];
+  const nbFragments = molecule.getFragmentNumbers(fragmentMap, false, false);
   info.nbFragments = nbFragments;
 }

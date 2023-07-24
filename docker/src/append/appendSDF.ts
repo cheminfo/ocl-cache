@@ -19,7 +19,7 @@ export async function appendSDF(text: string) {
   let counter = 0;
   const entries = parse(text).molecules;
   debug('Start append');
-  for (let entry of entries) {
+  for (const entry of entries) {
     counter++;
     if (counter % 1000 === 0) {
       debug(

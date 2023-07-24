@@ -15,7 +15,7 @@ export async function appendSmiles(text: string) {
   let newMolecules = 0;
   let counter = 0;
   debug('Start append');
-  for (let smiles of smilesArray) {
+  for (const smiles of smilesArray) {
     counter++;
     if (counter % 1000 === 0) {
       debug(

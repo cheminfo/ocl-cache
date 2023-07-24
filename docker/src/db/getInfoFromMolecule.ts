@@ -6,7 +6,7 @@ import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 import { MoleculeInfo } from '../MoleculeInfo';
 
 import getDB from './getDB';
-import { improve } from './improve';
+import { improveMoleculeInfo } from './improveMoleculeInfo';
 import { insertMolecule } from './insertMolecule';
 
 const debug = Debug('getInfoFromMolecule');
@@ -24,7 +24,7 @@ export async function getInfoFromMolecule(
   const resultFromDB = stmt.get(idCode);
   if (resultFromDB) {
     debug('in cache');
-    return improve(resultFromDB as InternalMoleculeInfo);
+    return improveMoleculeInfo(resultFromDB as InternalMoleculeInfo);
   }
-  return improve(await insertMolecule(idCode, db));
+  return improveMoleculeInfo(await insertMolecule(idCode, db));
 }
