@@ -11,6 +11,13 @@ Cache molecule directed information in sqlite3.
 
 `$ npm i ocl-cache`
 
+On silicon mac you may need:
+
+```
+cd node_modules/better-sqlite3
+npm run build-release
+```
+
 ## Usage
 
 ```js
