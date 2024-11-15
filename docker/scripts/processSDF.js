@@ -29,7 +29,7 @@ async function processSDF() {
       }
     }
     if (wasWaiting) {
-      debug('Wating for new SDF files');
+      debug('Waiting for new SDF files');
       wasWaiting = true;
     }
 
