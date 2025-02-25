@@ -1,0 +1,40 @@
+services:
+  ocl-cache:
+    build: ./docker
+    #image: ghcr.io/cheminfo/ocl-cache-docker:head
+    restart: always
+    ulimits:
+      core: 0
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+    volumes:
+      - ./sqlite:/node/sqlite
+    networks:
+      - traefik
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.maygen.rule=Host(`ocl-cache.cheminfo.org`)'
+      - 'traefik.http.routers.maygen.entrypoints=websecure'
+      - 'traefik.http.routers.maygen.tls.certresolver=letsencrypt'
+
+  process-sdf:
+    build: ./docker
+    #image: ghcr.io/cheminfo/ocl-cache-docker:head
+    restart: always
+    ulimits:
+      core: 0
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+    volumes:
+      - ./sqlite:/node/sqlite
+      - ./data/sdf:/node/sdf
+      - ./data/smiles:/node/smiles
+    command: npm run processSDF
+
+networks:
+  traefik:
+    external: true
