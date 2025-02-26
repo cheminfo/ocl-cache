@@ -3,56 +3,41 @@ import { MF } from 'mass-tools';
 import { Molecule, MoleculeProperties } from 'openchemlib';
 import { getMF } from 'openchemlib-utils';
 
-import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
 const debug = debugLibrary('calculateMoleculeInfo');
 
 export default function calculateMoleculeInfo(
   molecule: Molecule,
   options: { ignoreTautomer?: boolean } = {},
-): InternalMoleculeInfo {
-  //@ts-expect-error ignore lack of declaration
-  const info: InternalMoleculeInfo = {};
+): MoleculeInfo {
   const { ignoreTautomer = false } = options;
 
+  // @ts-expect-error - parts is not defined in the type and it should be fixed in mf
   const mf = getMF(molecule).parts.sort().join('.');
   const mfInfo = new MF(mf).getInfo();
 
-  info.mf = mfInfo.mf;
-  info.mw = mfInfo.mass;
-  info.em = mfInfo.monoisotopicMass;
-  info.charge = mfInfo.charge;
+  const idCode = molecule.getIDCode();
+  const noStereoID = getNoStereoIDCode(molecule);
 
-  info.atoms = mfInfo.atoms;
-  info.unsaturation = mfInfo.unsaturation;
-
-  info.idCode = molecule.getIDCode();
-  info.noStereoID = getNoStereoIDCode(molecule);
-
-  let small = true;
-  if (mfInfo.atoms) {
-    if (mfInfo.atoms.C > 50) small = false;
-  } else if (mfInfo.parts) {
-    for (const part of mfInfo.parts) {
-      if (part.atoms.C > 50) small = false;
-    }
-  }
-
-  if (small) {
-    if (ignoreTautomer) {
-      debug(`Ignore tautomer: ${mfInfo.mf}`);
-      info.noStereoTautomerID = info.noStereoID;
-    } else {
-      info.noStereoTautomerID = getNoStereoTautomerIDCode(molecule);
-    }
-  } else {
-    debug(`Too big: ${mfInfo.mf}`);
-    info.noStereoTautomerID = info.noStereoID;
-  }
-
-  appendProperties(molecule, info);
-
-  info.ssIndex = getSSIndex(molecule);
+  const info: MoleculeInfo = {
+    mf: mfInfo.mf,
+    mw: mfInfo.mass,
+    em: mfInfo.monoisotopicMass,
+    charge: mfInfo.charge,
+    atoms: mfInfo.atoms,
+    unsaturation: mfInfo.unsaturation,
+    idCode,
+    noStereoID,
+    noStereoTautomerID: getNoStereoTautomerIfSmall(
+      mfInfo,
+      molecule,
+      noStereoID,
+      ignoreTautomer,
+    ),
+    ...getProperties(molecule),
+    ssIndex: getSSIndex(molecule),
+  };
 
   return info;
 }
@@ -70,20 +55,51 @@ function getNoStereoTautomerIDCode(molecule: Molecule) {
   );
 }
 
-function getSSIndex(molecule: Molecule) {
-  return Buffer.from(Uint32Array.from(molecule.getIndex()).buffer);
+function getSSIndex(molecule: Molecule): Int32Array {
+  return Int32Array.from(molecule.getIndex());
 }
 
-function appendProperties(molecule: Molecule, info: InternalMoleculeInfo) {
+function getProperties(molecule: Molecule) {
   const moleculeProperties = new MoleculeProperties(molecule);
-  info.logS = moleculeProperties.logS;
-  info.logP = moleculeProperties.logP;
-  info.acceptorCount = moleculeProperties.acceptorCount;
-  info.donorCount = moleculeProperties.donorCount;
-  info.rotatableBondCount = moleculeProperties.rotatableBondCount;
-  info.stereoCenterCount = moleculeProperties.stereoCenterCount;
-  info.polarSurfaceArea = moleculeProperties.polarSurfaceArea;
   const fragmentMap: any[] = [];
   const nbFragments = molecule.getFragmentNumbers(fragmentMap, false, false);
-  info.nbFragments = nbFragments;
+
+  return {
+    logS: moleculeProperties.logS,
+    logP: moleculeProperties.logP,
+    acceptorCount: moleculeProperties.acceptorCount,
+    donorCount: moleculeProperties.donorCount,
+    rotatableBondCount: moleculeProperties.rotatableBondCount,
+    stereoCenterCount: moleculeProperties.stereoCenterCount,
+    polarSurfaceArea: moleculeProperties.polarSurfaceArea,
+    nbFragments,
+  };
+}
+
+function getNoStereoTautomerIfSmall(
+  mfInfo: any,
+  molecule: Molecule,
+  noStereoID: string,
+  ignoreTautomer: boolean,
+) {
+  if (ignoreTautomer) {
+    debug(`Ignore tautomer: ${mfInfo.mf}`);
+    return noStereoID;
+  }
+
+  let small = true;
+  if (mfInfo.atoms) {
+    if (mfInfo.atoms.C > 50) small = false;
+  } else if (mfInfo.parts) {
+    for (const part of mfInfo.parts) {
+      if (part.atoms.C > 50) small = false;
+    }
+  }
+
+  if (small) {
+    return getNoStereoTautomerIDCode(molecule);
+  } else {
+    debug(`Too big: ${mfInfo.mf}`);
+    return noStereoID;
+  }
 }

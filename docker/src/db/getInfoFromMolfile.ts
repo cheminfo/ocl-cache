@@ -1,6 +1,6 @@
 import { Molecule } from 'openchemlib';
 
-import { MoleculeInfo } from '../MoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo';
 
 import { getInfoFromMolecule } from './getInfoFromMolecule';
 

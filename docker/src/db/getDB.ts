@@ -1,13 +1,16 @@
 import fs, { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-import sqLite, { Database } from 'better-sqlite3';
+import sqLite from 'better-sqlite3';
 
+import type { Database } from 'better-sqlite3';
+import debugLibrary from 'debug';
+
+const debug = debugLibrary('getDB');
 let db: Database;
 
 export default function getDB(): Database {
-  const debug = require('debug')('getDB');
-  const path = join(__dirname, '../../sqlite/');
+  const path = join(import.meta.dirname, '../../sqlite/');
   if (!db) {
     if (!existsSync(path)) {
       mkdirSync(path);

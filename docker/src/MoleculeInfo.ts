@@ -6,7 +6,7 @@ export interface MoleculeInfo {
   idCode: string;
   noStereoID: string;
   noStereoTautomerID: string;
-  ssIndex: number[];
+  ssIndex: Int32Array;
   logS: number;
   logP: number;
   acceptorCount: number;
@@ -18,3 +18,8 @@ export interface MoleculeInfo {
   unsaturation: number | undefined;
   atoms: Record<string, number>;
 }
+
+export type DBMoleculeInfo = Omit<MoleculeInfo, 'ssIndex' | 'atoms'> & {
+  atoms: string;
+  ssIndex: ArrayBufferLike;
+};

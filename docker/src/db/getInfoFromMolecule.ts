@@ -1,13 +1,12 @@
-import { Statement } from 'better-sqlite3';
+import type { Statement } from 'better-sqlite3';
 import Debug from 'debug';
 import { Molecule } from 'openchemlib';
 
-import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
-import { MoleculeInfo } from '../MoleculeInfo';
+import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
 
-import getDB from './getDB';
-import { improveMoleculeInfo } from './improveMoleculeInfo';
-import { insertMolecule } from './insertMolecule';
+import getDB from './getDB.ts';
+import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
+import { insertMolecule } from './insertMolecule.ts';
 
 const debug = Debug('getInfoFromMolecule');
 
@@ -21,10 +20,10 @@ export async function getInfoFromMolecule(
   if (!stmt) {
     stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
   }
-  const resultFromDB = stmt.get(idCode);
+  const resultFromDB = stmt.get(idCode) as DBMoleculeInfo;
   if (resultFromDB) {
     debug('in cache');
-    return improveMoleculeInfo(resultFromDB as InternalMoleculeInfo);
+    return dbInfoToMoleculeInfo(resultFromDB);
   }
   return insertMolecule(idCode, db);
 }

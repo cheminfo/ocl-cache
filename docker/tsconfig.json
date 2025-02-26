@@ -2,13 +2,17 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": "lib",
     "skipLibCheck": true,
     "sourceMap": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "strict": true,
     "target": "es2022"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__tests__"]
 }

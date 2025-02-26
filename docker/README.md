@@ -5,26 +5,15 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-Cache molecule directed information in sqlite3.
+This project will cache derived molecule properties like noStereoIDCode, logP, etc in a sqlite3 database.
 
-## Installation
+## Development on Apple Silicon
 
-`$ npm i ocl-cache`
+If you npm configuration contains `ignore-scripts=true` you may have to execute the following commands:
 
-On silicon mac you may need:
-
-```
+```bash
 cd node_modules/better-sqlite3
 npm run build-release
-```
-
-## Usage
-
-```js
-import { myModule } from 'ocl-cache';
-
-const result = myModule(args);
-// result is ...
 ```
 
 ## License

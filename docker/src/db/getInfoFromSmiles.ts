@@ -1,9 +1,9 @@
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
-import { MoleculeInfo } from '../MoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-import { getInfoFromMolecule } from './getInfoFromMolecule';
+import { getInfoFromMolecule } from './getInfoFromMolecule.ts';
 
 const debug = debugLibrary('getInfoFromSmiles');
 export function getInfoFromSmiles(smiles: string): Promise<MoleculeInfo> {

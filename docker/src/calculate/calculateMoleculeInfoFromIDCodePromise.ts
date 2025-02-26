@@ -4,14 +4,17 @@ import { join } from 'path';
 import Piscina from 'piscina';
 import { setTimeout as delay } from 'node:timers/promises';
 
-import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
+import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode.ts';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode';
+import { EventEmitter } from 'events';
+
+EventEmitter.defaultMaxListeners = 512; // default is 10 and we can have more processes
 
 const nbCPU = cpus().length;
 
 const piscina = new Piscina({
-  filename: join(__dirname, 'calculateMoleculeInfoFromIDCode.js'),
+  filename: join(import.meta.dirname, 'calculateMoleculeInfoFromIDCode.ts'),
   minThreads: nbCPU,
   maxThreads: nbCPU,
   idleTimeout: 1000,
@@ -24,7 +27,7 @@ const piscina = new Piscina({
  */
 export default async function calculateMoleculeInfoFromIDCodePromise(
   idCode: string,
-): Promise<{ promise: Promise<InternalMoleculeInfo> }> {
+): Promise<{ promise: Promise<MoleculeInfo> }> {
   const abortController = new AbortController();
   const timeout = setTimeout(() => abortController.abort(), 60000);
 
@@ -41,6 +44,7 @@ export default async function calculateMoleculeInfoFromIDCodePromise(
         return info;
       });
   } catch (e) {
+    // it takes too long
     promise = Promise.resolve(
       calculateMoleculeInfoFromIDCode(idCode, { ignoreTautomer: true }),
     );
