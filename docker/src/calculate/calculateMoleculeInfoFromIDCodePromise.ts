@@ -1,9 +1,8 @@
 import { cpus } from 'os';
 import { join } from 'path';
 
-import { AbortController } from 'abort-controller';
-import delay from 'delay';
 import Piscina from 'piscina';
+import { setTimeout as delay } from 'node:timers/promises';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
 

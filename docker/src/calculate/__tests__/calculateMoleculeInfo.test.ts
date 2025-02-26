@@ -28,7 +28,7 @@ test('should first', () => {
       "mf": "C6H14",
       "mw": 86.17558593719237,
       "nbFragments": 1,
-      "noStereoID": "gGP@DiVj\`C|p",
+      "noStereoID": "gGP@DiVj\`@",
       "noStereoTautomerID": "gGP@DiVj\`@",
       "polarSurfaceArea": 0,
       "rotatableBondCount": 3,

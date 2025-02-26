@@ -26,5 +26,5 @@ export async function getInfoFromMolecule(
     debug('in cache');
     return improveMoleculeInfo(resultFromDB as InternalMoleculeInfo);
   }
-  return improveMoleculeInfo(await insertMolecule(idCode, db));
+  return insertMolecule(idCode, db);
 }

@@ -4,9 +4,9 @@ EXPOSE 20808
 
 RUN mkdir /node
 
-COPY package.json /node/
+COPY package-lock.json /node/
 WORKDIR /node
-RUN npm i 
+RUN npm ci 
 
 COPY tsconfig* /node/
 COPY src /node/src

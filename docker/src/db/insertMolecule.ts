@@ -16,10 +16,14 @@ export async function insertMolecule(
   }
   const { promise } = await calculateMoleculeInfoFromIDCodePromise(molecule);
   const info = await promise;
-  // convert Uint8Array(64) to number[] to be able to store it in sqlite
-  info.ssIndex = Buffer.from(info.ssIndex);
-  info.atoms = JSON.stringify(info.atoms);
 
-  stmt.run(info);
+  const stmtData = {
+    ...info,
+    // convert Uint8Array(64) to number[] to be able to store it in sqlite
+    ssIndex: Buffer.from(info.ssIndex),
+    atoms: JSON.stringify(info.atoms),
+  };
+
+  stmt.run(stmtData);
   return info;
 }

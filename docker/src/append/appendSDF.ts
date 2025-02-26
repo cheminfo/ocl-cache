@@ -1,6 +1,5 @@
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
-import pAll from 'p-all';
 
 //@ts-expect-error sdf-parser is not typed
 import { parse } from 'sdf-parser';

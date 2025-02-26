@@ -15,6 +15,6 @@ export interface MoleculeInfo {
   rotatableBondCount: number;
   polarSurfaceArea: number;
   nbFragments: number;
-  unsaturation: number;
-  atoms: string;
+  unsaturation: number | undefined;
+  atoms: Record<string, number>;
 }

@@ -1,8 +1,6 @@
 import debugLibrary from 'debug';
-//@ts-expect-error ignore lack of declaration
 import { MF } from 'mass-tools';
 import { Molecule, MoleculeProperties } from 'openchemlib';
-//@ts-expect-error ignore lack of declaration
 import { getMF } from 'openchemlib-utils';
 
 import { InternalMoleculeInfo } from '../InternalMoleculeInfo';
