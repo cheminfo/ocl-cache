@@ -12,7 +12,7 @@ const debug = debugLibrary('getInfoFromIDCode');
 let stmt: Statement;
 
 export async function getInfoFromIDCode(idCode: string): Promise<MoleculeInfo> {
-  const db = getDB();
+  const db = await getDB();
   if (!stmt) {
     stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
   }
