@@ -3,6 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { FastifyInstance } from 'fastify/types/instance';
 
 import { getInfoFromMolfile } from '../db/getInfoFromMolfile';
+import getDB from '../db/getDB';
 
 const debug = debugLibrary('getInfoFromSmiles');
 
@@ -27,8 +28,9 @@ export default function fromMolfile(fastify: FastifyInstance) {
 
 async function getInfo(request: FastifyRequest, response: FastifyReply) {
   const body: any = request.query;
+  const db = await getDB();
   try {
-    const result = await getInfoFromMolfile(body.molfile);
+    const result = await getInfoFromMolfile(body.molfile, db);
     return await response.send({ result });
   } catch (e: any) {
     debug(`Error: ${e.stack}`);

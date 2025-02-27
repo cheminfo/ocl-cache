@@ -2,11 +2,14 @@ import { test } from 'node:test';
 import { jestExpect as expect } from '@jest/expect';
 
 import { getInfoFromSmiles } from '../getInfoFromSmiles.ts';
+import { getTempDB } from '../getDB.ts';
 
 test('getInfoFromSmiles', async () => {
-  const result = await getInfoFromSmiles('CCOCC');
+  const tempDB = await getTempDB();
+  // first time it should store the result in the DB
+  const result = await getInfoFromSmiles('CCOCC', tempDB);
 
-  expect(result).toStrictEqual({
+  const expected = {
     idCode: 'gJQ@@eKU@@',
     mf: 'C4H10O',
     em: 74.07316494187,
@@ -21,9 +24,15 @@ test('getInfoFromSmiles', async () => {
     rotatableBondCount: 2,
     stereoCenterCount: 0,
     polarSurfaceArea: 9.229999542236328,
-    ssIndex: Int32Array.from([64, 8192, 0, 0, 0]),
+    ssIndex: Int32Array.from([
+      -95943616, 512, 1048576, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]),
     nbFragments: 1,
     unsaturation: 0,
     atoms: { C: 4, H: 10, O: 1 },
-  });
+  };
+
+  expect(result).toStrictEqual(expected);
+  const result2 = await getInfoFromSmiles('CCOCC', tempDB);
+  expect(result2).toStrictEqual(expected);
 });

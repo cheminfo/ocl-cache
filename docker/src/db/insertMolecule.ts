@@ -11,9 +11,7 @@ export async function insertMolecule(
   db: Database,
 ): Promise<MoleculeInfo> {
   const { promise } = await calculateMoleculeInfoFromIDCodePromise(molecule);
-  console.log('-----------------');
   const info = await promise;
-  console.log('====================');
   insertInfo(info, db);
 
   return info;

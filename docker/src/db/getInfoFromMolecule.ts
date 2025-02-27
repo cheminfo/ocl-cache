@@ -4,9 +4,9 @@ import { Molecule } from 'openchemlib';
 
 import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
 
-import getDB from './getDB.ts';
 import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
 import { insertMolecule } from './insertMolecule.ts';
+import type { Database } from 'better-sqlite3';
 
 const debug = Debug('getInfoFromMolecule');
 
@@ -14,13 +14,14 @@ let stmt: Statement;
 
 export async function getInfoFromMolecule(
   molecule: Molecule,
+  db: Database,
 ): Promise<MoleculeInfo> {
-  const db = getDB();
   const idCode = molecule.getIDCode();
   if (!stmt) {
     stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
   }
   const resultFromDB = stmt.get(idCode) as DBMoleculeInfo;
+
   if (resultFromDB) {
     debug('in cache');
     return dbInfoToMoleculeInfo(resultFromDB);

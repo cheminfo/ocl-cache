@@ -20,6 +20,14 @@ export interface MoleculeInfo {
 }
 
 export type DBMoleculeInfo = Omit<MoleculeInfo, 'ssIndex' | 'atoms'> & {
-  atoms: string;
-  ssIndex: ArrayBufferLike;
+  atoms: ArrayBufferLike;
+  ssIndex: Uint8Array<ArrayBufferLike>;
+  ssIndex0: BigInt;
+  ssIndex1: BigInt;
+  ssIndex2: BigInt;
+  ssIndex3: BigInt;
+  ssIndex4: BigInt;
+  ssIndex5: BigInt;
+  ssIndex6: BigInt;
+  ssIndex7: BigInt;
 };

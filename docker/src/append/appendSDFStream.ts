@@ -10,13 +10,12 @@ import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMolecu
 import getDB from '../db/getDB';
 import idCodeIsPresent from '../db/idCodeIsPresent';
 import { insertInfo } from '../db/insertInfo';
+import type { Database } from 'better-sqlite3';
 
 const debug = debugLibrary('appendSDF');
 const maxTasks = cpus().length * 2;
 
-export async function appendSDFStream(stream: ReadableStream) {
-  const db = getDB();
-
+export async function appendSDFStream(stream: ReadableStream, db: Database) {
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;

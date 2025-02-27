@@ -2,14 +2,13 @@ import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise';
-import getDB from '../db/getDB';
 import idCodeIsPresent from '../db/idCodeIsPresent';
 import { insertInfo } from '../db/insertInfo';
+import type { Database } from 'better-sqlite3';
 
 const debug = debugLibrary('appendSmiles');
 
-export async function appendSmiles(text: string) {
-  const db = getDB();
+export async function appendSmiles(text: string, db: Database) {
   const smilesArray = text.split(/\r?\n/);
   let existingMolecules = 0;
   let newMolecules = 0;
