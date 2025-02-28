@@ -4,7 +4,7 @@ import { jestExpect as expect } from '@jest/expect';
 import { getInfoFromSmiles } from '../getInfoFromSmiles.ts';
 import { getTempDB } from '../getDB.ts';
 
-test('getInfoFromSmiles', async () => {
+test('will test if data are the same with cache or without cache', async () => {
   const tempDB = await getTempDB();
   // first time it should store the result in the DB
   const result = await getInfoFromSmiles('CCOCC', tempDB);

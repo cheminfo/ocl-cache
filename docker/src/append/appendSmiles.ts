@@ -1,9 +1,9 @@
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
-import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise';
-import idCodeIsPresent from '../db/idCodeIsPresent';
-import { insertInfo } from '../db/insertInfo';
+import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
+import idCodeIsPresent from '../db/idCodeIsPresent.ts';
+import { insertInfo } from '../db/insertInfo.ts';
 import type { Database } from 'better-sqlite3';
 
 const debug = debugLibrary('appendSmiles');
@@ -29,7 +29,7 @@ export async function appendSmiles(text: string, db: Database) {
         continue;
       }
       const { promise } = await calculateMoleculeInfoFromIDCodePromise(idCode);
-      promise
+      await promise
         .then((info) => {
           insertInfo(info, db);
         })
