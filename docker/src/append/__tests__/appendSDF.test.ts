@@ -10,8 +10,7 @@ test('appendSDF', async () => {
   const db = await getTempDB();
   await appendSDF(data, db);
 
-  const stmt = db.prepare('SELECT idCode FROM molecules ');
-  const result = stmt.all();
+  const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },

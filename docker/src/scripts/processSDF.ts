@@ -23,7 +23,8 @@ while (true) {
   for (const file of fileCollection) {
     wasWaiting = false;
     debug(`Importing: ${file.name}`);
-    await appendSDFStream(ReadStream.fromWeb(file.stream()), db);
+
+    await appendSDFStream(file.stream(), db);
     let sourceFile = fileCollection.sources.find(
       (source) => source.uuid === file.sourceUUID,
     );

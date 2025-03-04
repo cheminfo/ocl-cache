@@ -14,7 +14,7 @@ test('appendSDFStream', async () => {
   const db = await getTempDB();
   await appendSDFStream(stream, db);
 
-  const result = db.selectIDCode.all();
+  const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },
@@ -34,7 +34,7 @@ test('appendSDFStream compressed file', async () => {
   const db = await getTempDB();
   await appendSDFStream(stream, db);
 
-  const result = db.selectIDCode.all();
+  const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },

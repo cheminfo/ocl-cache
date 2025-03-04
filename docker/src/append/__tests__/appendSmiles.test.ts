@@ -10,9 +10,7 @@ CCC`;
   const db = await getTempDB();
   await appendSmiles(data, db);
 
-  const stmt = db.prepare('SELECT idCode FROM molecules ');
-  const result = stmt.all();
-  console.log(result);
+  const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'eF@Hp@' },
     { idCode: 'eM@Hz@' },

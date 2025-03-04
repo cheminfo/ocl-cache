@@ -5,7 +5,7 @@ import sqLite from 'better-sqlite3';
 import type { Database, Statement } from 'better-sqlite3';
 
 import debugLibrary from 'debug';
-import { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo';
+import type { DBMoleculeInfo } from '../MoleculeInfo.ts';
 
 const debug = debugLibrary('getDB');
 let db: Database;
