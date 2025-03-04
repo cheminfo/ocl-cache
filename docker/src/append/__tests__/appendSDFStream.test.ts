@@ -14,8 +14,7 @@ test('appendSDFStream', async () => {
   const db = await getTempDB();
   await appendSDFStream(stream, db);
 
-  const stmt = db.prepare('SELECT idCode FROM molecules ');
-  const result = stmt.all();
+  const result = db.selectIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },
@@ -23,7 +22,7 @@ test('appendSDFStream', async () => {
   ]);
 });
 
-test.only('appendSDFStream compressed file', async () => {
+test('appendSDFStream compressed file', async () => {
   const file = await openAsBlob(join(import.meta.dirname, 'diol.sdf.gz'));
   const decompressionStream = new DecompressionStream('gzip');
   const textDecoderStream = new TextDecoderStream();
@@ -35,11 +34,7 @@ test.only('appendSDFStream compressed file', async () => {
   const db = await getTempDB();
   await appendSDFStream(stream, db);
 
-  const stmt = db.prepare('SELECT idCode FROM molecules ');
-  const result = stmt.all();
-  console.log(result);
-  return;
-  1;
+  const result = db.selectIDCode.all();
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },

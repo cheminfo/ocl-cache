@@ -2,9 +2,10 @@ import fs, { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import Postgrator from 'postgrator';
 import sqLite from 'better-sqlite3';
-import type { Database } from 'better-sqlite3';
+import type { Database, Statement } from 'better-sqlite3';
 
 import debugLibrary from 'debug';
+import { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo';
 
 const debug = debugLibrary('getDB');
 let db: Database;
@@ -13,7 +14,7 @@ let db: Database;
  * Returns a promise that resolves as an instance of the database
  * @returns promise that resolves as an instance of the database
  */
-export default async function getDB(): Promise<Database> {
+export default async function getDB(): Promise<DB> {
   if (!db?.open) {
     const path = join(import.meta.dirname, '../../sqlite/');
     if (!existsSync(path)) {
@@ -37,17 +38,17 @@ export default async function getDB(): Promise<Database> {
     }, 300000).unref();
   }
 
-  return db;
+  return new DB(db);
 }
 
 /**
  * Returns a Promise that resolves to a temporary instance of the database
  * @returns promise that resolves as an instance of the temporary database
  */
-export async function getTempDB(): Promise<Database> {
+export async function getTempDB(): Promise<DB> {
   const tempDB = sqLite(':memory:');
   await prepareDB(tempDB);
-  return tempDB;
+  return new DB(tempDB);
 }
 
 /**
@@ -81,4 +82,27 @@ export async function prepareDB(db: Database): Promise<void> {
     },
   });
   await postgrator.migrate();
+}
+
+export class DB {
+  db: Database;
+  stmt: Record<string, Statement>;
+  insertInfo: Statement<DBMoleculeInfo>;
+  selectAllIDCode: Statement<{ idCode: string }[]>;
+  searchIDCode: Statement<string, DBMoleculeInfo>;
+  isIDCode: Statement<string, undefined | 1>;
+  constructor(db: Database) {
+    this.db = db;
+    this.stmt = {};
+    this.insertInfo = this.db.prepare(
+      'INSERT INTO molecules VALUES (@idCode, @mf, @em, @mw, @charge, @noStereoID, @noStereoTautomerID, @logS, @logP, @acceptorCount, @donorCount, @rotatableBondCount, @stereoCenterCount, @polarSurfaceArea, @nbFragments , @unsaturation, @atoms, @ssIndex, @ssIndex0, @ssIndex1, @ssIndex2, @ssIndex3, @ssIndex4, @ssIndex5, @ssIndex6, @ssIndex7)',
+    );
+    this.selectAllIDCode = this.db.prepare('SELECT idCode FROM molecules ');
+    this.searchIDCode = this.db.prepare(
+      ' SELECT * FROM molecules WHERE idCode = ?',
+    );
+    this.isIDCode = this.db.prepare(
+      ' SELECT 1 FROM molecules WHERE idCode = ?',
+    );
+  }
 }

@@ -1,10 +1,5 @@
-import type { Database, Statement } from 'better-sqlite3';
+import { DB } from './getDB.ts';
 
-let stmt: Statement;
-export default function idCodeIsPresent(idCode: string, db: Database) {
-  if (!stmt) {
-    stmt = db.prepare('SELECT 1 FROM molecules WHERE idCode = ?');
-  }
-
-  return stmt.get(idCode) !== undefined;
+export default function idCodeIsPresent(idCode: string, db: DB) {
+  return db.isIDCode.get(idCode) !== undefined;
 }

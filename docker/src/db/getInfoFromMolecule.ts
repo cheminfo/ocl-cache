@@ -7,20 +7,16 @@ import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
 import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
 import { insertMolecule } from './insertMolecule.ts';
 import type { Database } from 'better-sqlite3';
+import { DB } from './getDB.ts';
 
 const debug = Debug('getInfoFromMolecule');
 
-let stmt: Statement;
-
 export async function getInfoFromMolecule(
   molecule: Molecule,
-  db: Database,
+  db: DB,
 ): Promise<MoleculeInfo> {
   const idCode = molecule.getIDCode();
-  if (!stmt) {
-    stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
-  }
-  const resultFromDB = stmt.get(idCode) as DBMoleculeInfo;
+  const resultFromDB = db.searchIDCode.get(idCode);
 
   if (resultFromDB) {
     debug('in cache');

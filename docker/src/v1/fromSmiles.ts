@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { FastifyInstance } from 'fastify/types/instance';
 
 import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
-import getDB from '../db/getDB';
+import getDB, { DB } from '../db/getDB';
 
 const debug = debugLibrary('getInfoFromSmiles');
 

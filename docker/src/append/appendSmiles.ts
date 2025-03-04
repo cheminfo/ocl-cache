@@ -4,11 +4,11 @@ import { Molecule } from 'openchemlib';
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
-import type { Database } from 'better-sqlite3';
+import { DB } from '../db/getDB.ts';
 
 const debug = debugLibrary('appendSmiles');
 
-export async function appendSmiles(text: string, db: Database) {
+export async function appendSmiles(text: string, db: DB) {
   const smilesArray = text.split(/\r?\n/);
   let existingMolecules = 0;
   let newMolecules = 0;

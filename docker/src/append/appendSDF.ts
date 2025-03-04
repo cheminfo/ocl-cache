@@ -7,11 +7,11 @@ import { parse } from 'sdf-parser';
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
-import type { Database } from 'better-sqlite3';
+import { DB } from '../db/getDB.ts';
 
 const debug = debugLibrary('appendSDF');
 
-export async function appendSDF(text: string, db: Database) {
+export async function appendSDF(text: string, db: DB) {
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;

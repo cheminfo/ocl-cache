@@ -9,14 +9,9 @@ import { insertMolecule } from './insertMolecule';
 
 const debug = debugLibrary('getInfoFromIDCode');
 
-let stmt: Statement;
-
 export async function getInfoFromIDCode(idCode: string): Promise<MoleculeInfo> {
   const db = await getDB();
-  if (!stmt) {
-    stmt = db.prepare('SELECT * FROM molecules WHERE idCode = ?');
-  }
-  const resultFromDB = stmt.get(idCode) as DBMoleculeInfo;
+  const resultFromDB = db.searchIDCode.get(idCode);
   if (resultFromDB) {
     debug('in cache');
     return dbInfoToMoleculeInfo(resultFromDB);
