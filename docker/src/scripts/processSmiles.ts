@@ -1,11 +1,11 @@
-import { renameSync } from 'fs';
-import { join } from 'path';
+import { renameSync } from 'node:fs';
+import { join } from 'node:path';
 
 import debugLib from 'debug';
-
 import { FileCollection } from 'file-collection';
-import { appendSmiles } from '../index.ts';
+
 import getDB from '../db/getDB.ts';
+import { appendSmiles } from '../index.ts';
 
 const debug = debugLib('processSmiles');
 

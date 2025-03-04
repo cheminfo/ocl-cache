@@ -1,10 +1,10 @@
+import type { Database } from 'better-sqlite3';
 import { Molecule } from 'openchemlib';
 
 import type { MoleculeInfo } from '../MoleculeInfo';
 
+import type { DB } from './getDB';
 import { getInfoFromMolecule } from './getInfoFromMolecule';
-import type { Database } from 'better-sqlite3';
-import { DB } from './getDB';
 
 export function getInfoFromMolfile(
   molfile: string,

@@ -1,10 +1,11 @@
 import { Statement } from 'better-sqlite3';
 import debugLibrary from 'debug';
 
-import { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo';
+import { DBMoleculeInfo } from '../MoleculeInfo';
 
-import getDB from './getDB';
 import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo';
+import getDB from './getDB';
 import { insertMolecule } from './insertMolecule';
 
 const debug = debugLibrary('getInfoFromIDCode');

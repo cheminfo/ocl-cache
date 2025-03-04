@@ -1,9 +1,9 @@
 import debugLibrary from 'debug';
-import { FastifyRequest, FastifyReply } from 'fastify';
-import { FastifyInstance } from 'fastify/types/instance';
+import type { FastifyRequest, FastifyReply } from 'fastify';
+import type { FastifyInstance } from 'fastify/types/instance';
 
-import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
 import getDB, { DB } from '../db/getDB';
+import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
 
 const debug = debugLibrary('getInfoFromSmiles');
 
@@ -32,8 +32,8 @@ async function getInfo(request: FastifyRequest, response: FastifyReply) {
   try {
     const result = await getInfoFromSmiles(body.smiles, db);
     return await response.send({ result });
-  } catch (e: any) {
-    debug(`Error: ${e.stack}`);
-    return response.send({ result: {}, log: e.toString() });
+  } catch (error: any) {
+    debug(`Error: ${error.stack}`);
+    return response.send({ result: {}, log: error.toString() });
   }
 }

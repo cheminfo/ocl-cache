@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 
 import pkg from 'openchemlib';
 
@@ -26,7 +26,7 @@ async function doAll() {
 
     sum += end - start;
   }
-  console.log('Average time: ', sum / smiles.length);
+  console.log('Average time:', sum / smiles.length);
 }
 
 doAll();

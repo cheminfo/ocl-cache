@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify/types/instance';
+import type { FastifyInstance } from 'fastify/types/instance';
 
 import fromIDCode from './fromIDCode';
 import fromMolfile from './fromMolfile.js';

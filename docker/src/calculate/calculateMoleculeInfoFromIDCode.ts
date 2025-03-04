@@ -1,7 +1,8 @@
 import { Molecule } from 'openchemlib';
 
-import calculateMoleculeInfo from './calculateMoleculeInfo.ts';
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
+
+import calculateMoleculeInfo from './calculateMoleculeInfo.ts';
 
 export default function calculateMoleculeInfoFromIDCode(
   idCode: string,

@@ -1,11 +1,11 @@
+import type { Database } from 'better-sqlite3';
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
+import type { DB } from './getDB.ts';
 import { getInfoFromMolecule } from './getInfoFromMolecule.ts';
-import type { Database } from 'better-sqlite3';
-import { DB } from './getDB.ts';
 
 const debug = debugLibrary('getInfoFromSmiles');
 export function getInfoFromSmiles(

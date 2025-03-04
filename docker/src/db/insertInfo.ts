@@ -1,18 +1,19 @@
 import type { Database, Statement } from 'better-sqlite3';
+import { serialize } from 'bson';
 
 import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
-import { serialize } from 'bson';
-import { DB } from './getDB.ts';
+
+import type { DB } from './getDB.ts';
 
 interface SSIndexes {
-  ssIndex0: BigInt;
-  ssIndex1: BigInt;
-  ssIndex2: BigInt;
-  ssIndex3: BigInt;
-  ssIndex4: BigInt;
-  ssIndex5: BigInt;
-  ssIndex6: BigInt;
-  ssIndex7: BigInt;
+  ssIndex0: bigint;
+  ssIndex1: bigint;
+  ssIndex2: bigint;
+  ssIndex3: bigint;
+  ssIndex4: bigint;
+  ssIndex5: bigint;
+  ssIndex6: bigint;
+  ssIndex7: bigint;
 }
 
 export function insertInfo(info: MoleculeInfo, db: DB) {
@@ -42,8 +43,8 @@ export function insertInfo(info: MoleculeInfo, db: DB) {
 
   try {
     db.insertInfo.run(stmtData);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
     console.log(`idCode already exists in the database: ${info.idCode}`);
   }
 }

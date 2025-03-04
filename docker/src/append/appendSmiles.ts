@@ -2,9 +2,9 @@ import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
+import type { DB } from '../db/getDB.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
-import { DB } from '../db/getDB.ts';
 
 const debug = debugLibrary('appendSmiles');
 
@@ -33,11 +33,11 @@ export async function appendSmiles(text: string, db: DB) {
         .then((info) => {
           insertInfo(info, db);
         })
-        .catch((err) => {
-          console.log(err.toString());
+        .catch((error) => {
+          console.log(error.toString());
         });
-    } catch (e: any) {
-      debug(`Error parsing molfile: ${e.toString()}`);
+    } catch (error: any) {
+      debug(`Error parsing molfile: ${error.toString()}`);
       continue;
     }
     newMolecules++;

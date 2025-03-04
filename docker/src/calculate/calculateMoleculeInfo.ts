@@ -1,6 +1,7 @@
 import debugLibrary from 'debug';
 import { MF } from 'mass-tools';
-import { Molecule, MoleculeProperties } from 'openchemlib';
+import type { Molecule} from 'openchemlib';
+import { MoleculeProperties } from 'openchemlib';
 import { getMF } from 'openchemlib-utils';
 
 import type { MoleculeInfo } from '../MoleculeInfo.ts';

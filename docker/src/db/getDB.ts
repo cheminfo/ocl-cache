@@ -1,10 +1,11 @@
-import fs, { existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
-import Postgrator from 'postgrator';
+import fs, { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+
 import sqLite from 'better-sqlite3';
 import type { Database, Statement } from 'better-sqlite3';
-
 import debugLibrary from 'debug';
+import Postgrator from 'postgrator';
+
 import type { DBMoleculeInfo } from '../MoleculeInfo.ts';
 
 const debug = debugLibrary('getDB');
@@ -53,7 +54,7 @@ export async function getTempDB(): Promise<DB> {
 
 /**
  * Internal function that ensures that the schema of the database is up to date
- * @param {InstanceType<import('better-sqlite3')>} db - the instance of sqlite3 database
+ * @param db - the instance of sqlite3 database
  */
 export async function prepareDB(db: Database): Promise<void> {
   const postgrator = new Postgrator({
@@ -88,7 +89,7 @@ export class DB {
   db: Database;
   stmt: Record<string, Statement>;
   insertInfo: Statement<DBMoleculeInfo>;
-  selectAllIDCode: Statement<{ idCode: string }[]>;
+  selectAllIDCode: Statement<Array<{ idCode: string }>>;
   searchIDCode: Statement<string, DBMoleculeInfo>;
   isIDCode: Statement<string, undefined | 1>;
   constructor(db: Database) {

@@ -1,13 +1,14 @@
-import { cpus } from 'os';
-import { join } from 'path';
-
-import Piscina from 'piscina';
+import { EventEmitter } from 'node:events';
+import { cpus } from 'node:os';
+import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode.ts';
+import Piscina from 'piscina';
+
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-import { EventEmitter } from 'events';
+import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode.ts';
+
 
 EventEmitter.defaultMaxListeners = 512; // default is 10 and we can have more processes
 
@@ -43,7 +44,7 @@ export default async function calculateMoleculeInfoFromIDCodePromise(
         clearTimeout(timeout);
         return info;
       });
-  } catch (e) {
+  } catch {
     // it takes too long
     promise = Promise.resolve(
       calculateMoleculeInfoFromIDCode(idCode, { ignoreTautomer: true }),

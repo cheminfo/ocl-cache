@@ -24,7 +24,7 @@
     "prettier-write": "prettier --write src",
     "start": "npm run tsc && node ./lib/server.js",
     "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
-    "test-only": "node --test",
+    "test-only": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning",
     "tsc": "npm run clean && tsc"
   },
   "repository": {
@@ -43,6 +43,7 @@
     "@vitest/coverage-v8": "^3.0.7",
     "eslint": "^9.21.0",
     "eslint-config-cheminfo-typescript": "^17.0.0",
+    "globals": "^16.0.0",
     "prettier": "^3.5.2",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.3"

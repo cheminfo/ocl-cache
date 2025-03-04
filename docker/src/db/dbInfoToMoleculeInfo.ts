@@ -1,4 +1,5 @@
 import { deserialize } from 'bson';
+
 import type { MoleculeInfo, DBMoleculeInfo } from '../MoleculeInfo.ts';
 
 export function dbInfoToMoleculeInfo(data: DBMoleculeInfo): MoleculeInfo {

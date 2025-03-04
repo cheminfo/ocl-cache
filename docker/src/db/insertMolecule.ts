@@ -1,9 +1,10 @@
 import type { Database, Statement } from 'better-sqlite3';
 
-import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
+import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
+
+import type { DB } from './getDB.ts';
 import { insertInfo } from './insertInfo.ts';
-import { DB } from './getDB.ts';
 
 export async function insertMolecule(
   molecule: string,

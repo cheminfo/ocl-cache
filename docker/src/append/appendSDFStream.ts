@@ -1,3 +1,4 @@
+import type { Database } from 'better-sqlite3';
 import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
 
@@ -5,10 +6,9 @@ import { Molecule } from 'openchemlib';
 import { iterator } from 'sdf-parser';
 
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
+import type { DB } from '../db/getDB.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
-import type { Database } from 'better-sqlite3';
-import { DB } from '../db/getDB.ts';
 
 const debug = debugLibrary('appendSDF');
 
@@ -38,11 +38,11 @@ export async function appendSDFStream(stream: ReadableStream, db: DB) {
         .then((info) => {
           insertInfo(info, db);
         })
-        .catch((err) => {
-          console.log(err.toString());
+        .catch((error) => {
+          console.log(error.toString());
         });
-    } catch (e: any) {
-      debug(`Error parsing molfile: ${e.toString()}`);
+    } catch (error: any) {
+      debug(`Error parsing molfile: ${error.toString()}`);
       continue;
     }
     newMolecules++;
