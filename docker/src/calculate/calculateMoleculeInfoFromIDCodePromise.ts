@@ -9,7 +9,6 @@ import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
 import calculateMoleculeInfoFromIDCode from './calculateMoleculeInfoFromIDCode.ts';
 
-
 EventEmitter.defaultMaxListeners = 512; // default is 10 and we can have more processes
 
 const nbCPU = cpus().length;
@@ -22,8 +21,8 @@ const piscina = new Piscina({
 });
 
 /**
- * @description Multithread import of compounds
- * @param idCode
+ * Multithread async function to calculate the information of a molecule from its idCode
+ * @param idCode - idCode of the molecule
  * @returns result to be imported
  */
 export default async function calculateMoleculeInfoFromIDCodePromise(

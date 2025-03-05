@@ -1,5 +1,7 @@
 import { test } from 'node:test';
+
 import { jestExpect as expect } from '@jest/expect';
+
 import { getTempDB } from '../../db/getDB.ts';
 import { appendSmiles } from '../appendSmiles.ts';
 

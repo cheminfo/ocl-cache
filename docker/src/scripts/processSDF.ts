@@ -2,16 +2,16 @@ import { renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-import debugLib from 'debug';
 import { FileCollection } from 'file-collection';
+import pino from 'pino';
 
 import getDB from '../db/getDB.ts';
 import { appendSDFStream } from '../index.ts';
 
-const debug = debugLib('processSDF');
-
 const sdfDir = join(import.meta.dirname, '../sdf/to_process');
-debug(`Checking for SDF files in: ${sdfDir}`);
+const logger = pino({ messageKey: 'processSDF' });
+
+logger.info(`Checking for SDF files in: ${sdfDir}`);
 
 const db = await getDB();
 
@@ -21,7 +21,7 @@ while (true) {
   await fileCollection.appendPath(sdfDir);
   for (const file of fileCollection) {
     wasWaiting = false;
-    debug(`Importing: ${file.name}`);
+    logger.info(`Importing: ${file.name}`);
 
     await appendSDFStream(file.stream(), db);
     const sourceFile = fileCollection.sources.find(
@@ -37,7 +37,7 @@ while (true) {
     }
   }
   if (wasWaiting) {
-    debug('Waiting for new SDF files');
+    logger.info('Waiting for new SDF files');
     wasWaiting = true;
   }
 

@@ -1,37 +1,34 @@
-import debugLibrary from 'debug';
-import type { FastifyRequest, FastifyReply } from 'fastify';
 import type { FastifyInstance } from 'fastify/types/instance';
 
 import { getInfoFromIDCode } from '../db/getInfoFromIDCode';
 
-const debug = debugLibrary('getInfoFromIDCode');
-
 export default function fromIDCode(fastify: FastifyInstance) {
-  fastify.get(
+  fastify.get<{ Querystring: { idCode: string } }>(
     '/v1/fromIDCode',
     {
       schema: {
         summary: 'Retrieve information from idCode',
         description: '',
         querystring: {
-          idCode: {
-            type: 'string',
-            description: 'idCode',
+          type: 'object',
+          properties: {
+            idCode: {
+              type: 'string',
+              description: 'idCode',
+            },
           },
+          required: ['idCode'],
         },
       },
     },
-    getInfo,
+    async (request, response) => {
+      try {
+        const result = await getInfoFromIDCode(request.query.idCode);
+        return await response.send({ result });
+      } catch (error: unknown) {
+        request.log.error(error);
+        return response.send({ result: {}, log: error?.toString() });
+      }
+    },
   );
-}
-
-async function getInfo(request: FastifyRequest, response: FastifyReply) {
-  const body: any = request.query;
-  try {
-    const result = await getInfoFromIDCode(body.idCode);
-    return await response.send({ result });
-  } catch (error: any) {
-    debug(`Error: ${error.stack}`);
-    return response.send({ result: {}, log: error.toString() });
-  }
 }

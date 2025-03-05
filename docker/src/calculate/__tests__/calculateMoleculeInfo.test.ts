@@ -1,10 +1,9 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-import { Molecule } from 'openchemlib';
-
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { test } from 'node:test';
+
 import { jestExpect as expect } from '@jest/expect';
+import { Molecule } from 'openchemlib';
 
 import calculateMoleculeInfoFromIDCode from '../calculateMoleculeInfoFromIDCode.ts';
 
@@ -23,14 +22,14 @@ test('should first', () => {
     charge: 0,
     donorCount: 0,
     em: 86.10955045122,
-    idCode: 'gGP@DiVj\`@',
+    idCode: 'gGP@DiVj`@',
     logP: 2.7947999835014343,
     logS: -2.0640000104904175,
     mf: 'C6H14',
     mw: 86.17558593719237,
     nbFragments: 1,
-    noStereoID: 'gGP@DiVj\`@',
-    noStereoTautomerID: 'gGP@DiVj\`@',
+    noStereoID: 'gGP@DiVj`@',
+    noStereoTautomerID: 'gGP@DiVj`@',
     polarSurfaceArea: 0,
     rotatableBondCount: 3,
     ssIndex: Int32Array.from([

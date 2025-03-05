@@ -1,23 +1,23 @@
-import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
+import pino from 'pino';
 
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
 import type { DB } from '../db/getDB.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
 
-const debug = debugLibrary('appendSmiles');
+const logger = pino({ messageKey: 'appendSmiles' });
 
 export async function appendSmiles(text: string, db: DB) {
   const smilesArray = text.split(/\r?\n/);
   let existingMolecules = 0;
   let newMolecules = 0;
   let counter = 0;
-  debug('Start append');
+  logger.info('Start append');
   for (const smiles of smilesArray) {
     counter++;
     if (counter % 1000 === 0) {
-      debug(
+      logger.info(
         `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
       );
     }
@@ -33,18 +33,18 @@ export async function appendSmiles(text: string, db: DB) {
         .then((info) => {
           insertInfo(info, db);
         })
-        .catch((error) => {
-          console.log(error.toString());
+        .catch((error: unknown) => {
+          logger.error(error);
         });
-    } catch (error: any) {
-      debug(`Error parsing molfile: ${error.toString()}`);
+    } catch (error: unknown) {
+      logger.error(`Error parsing molfile: ${error?.toString()}`);
       continue;
     }
     newMolecules++;
   }
 
-  debug(`Existing molecules: ${existingMolecules}`);
-  debug(`New molecules: ${newMolecules}`);
+  logger.info(`Existing molecules: ${existingMolecules}`);
+  logger.info(`New molecules: ${newMolecules}`);
 
-  debug('End append');
+  logger.info('End append');
 }

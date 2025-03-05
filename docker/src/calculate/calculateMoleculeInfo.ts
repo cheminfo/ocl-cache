@@ -1,13 +1,20 @@
-import debugLibrary from 'debug';
 import { MF } from 'mass-tools';
-import type { Molecule} from 'openchemlib';
+import type { Molecule } from 'openchemlib';
 import { MoleculeProperties } from 'openchemlib';
 import { getMF } from 'openchemlib-utils';
+import pino from 'pino';
 
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-const debug = debugLibrary('calculateMoleculeInfo');
+const logger = pino({ name: 'calculateMoleculeInfo' });
 
+/**
+ * Calculate information for a molecule from an instance of OCL Molecule
+ * @param molecule - instance of OCL Molecule
+ * @param options - options
+ * @param options.ignoreTautomer
+ * @returns
+ */
 export default function calculateMoleculeInfo(
   molecule: Molecule,
   options: { ignoreTautomer?: boolean } = {},
@@ -84,7 +91,7 @@ function getNoStereoTautomerIfSmall(
   ignoreTautomer: boolean,
 ) {
   if (ignoreTautomer) {
-    debug(`Ignore tautomer: ${mfInfo.mf}`);
+    logger.trace(`Ignore tautomer: ${mfInfo.mf}, ${molecule.getIDCode()}`);
     return noStereoID;
   }
 
@@ -100,7 +107,7 @@ function getNoStereoTautomerIfSmall(
   if (small) {
     return getNoStereoTautomerIDCode(molecule);
   } else {
-    debug(`Too big: ${mfInfo.mf}`);
+    logger.trace(`Too big: ${mfInfo.mf}, ${molecule.getIDCode()}`);
     return noStereoID;
   }
 }

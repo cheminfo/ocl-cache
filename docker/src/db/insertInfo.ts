@@ -1,9 +1,11 @@
 import { serialize } from 'bson';
+import pino from 'pino';
 
 import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
 
 import type { DB } from './getDB.ts';
 
+const logger = pino({ messageKey: 'insertInfo' });
 interface SSIndexes {
   ssIndex0: bigint;
   ssIndex1: bigint;
@@ -42,8 +44,7 @@ export function insertInfo(info: MoleculeInfo, db: DB) {
 
   try {
     db.insertInfo.run(stmtData);
-  } catch (error) {
-    console.log(error);
-    console.log(`idCode already exists in the database: ${info.idCode}`);
+  } catch (error: unknown) {
+    logger.error(error, info.idCode);
   }
 }

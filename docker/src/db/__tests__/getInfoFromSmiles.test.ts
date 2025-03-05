@@ -1,8 +1,9 @@
 import { test } from 'node:test';
+
 import { jestExpect as expect } from '@jest/expect';
 
-import { getInfoFromSmiles } from '../getInfoFromSmiles.ts';
 import { getTempDB } from '../getDB.ts';
+import { getInfoFromSmiles } from '../getInfoFromSmiles.ts';
 
 test('will test if data are the same with cache or without cache', async () => {
   const tempDB = await getTempDB();
@@ -14,6 +15,7 @@ test('will test if data are the same with cache or without cache', async () => {
     mf: 'C4H10O',
     em: 74.07316494187,
     mw: 74.12175605181704,
+    nbFragments: 1,
     charge: 0,
     noStereoID: 'gJQ@@eKU@@',
     noStereoTautomerID: 'gJQ@@eKU@@',
@@ -27,7 +29,6 @@ test('will test if data are the same with cache or without cache', async () => {
     ssIndex: Int32Array.from([
       -95943616, 512, 1048576, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]),
-    nbFragments: 1,
     unsaturation: 0,
     atoms: { C: 4, H: 10, O: 1 },
   };

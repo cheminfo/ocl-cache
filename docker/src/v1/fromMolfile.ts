@@ -1,39 +1,36 @@
-import debugLibrary from 'debug';
-import type { FastifyRequest, FastifyReply } from 'fastify';
 import type { FastifyInstance } from 'fastify/types/instance';
 
 import getDB from '../db/getDB';
 import { getInfoFromMolfile } from '../db/getInfoFromMolfile';
 
-const debug = debugLibrary('getInfoFromSmiles');
-
 export default function fromMolfile(fastify: FastifyInstance) {
-  fastify.get(
+  fastify.get<{ Querystring: { molfile: string } }>(
     '/v1/fromMolfile',
     {
       schema: {
         summary: 'Retrieve information from a molfile',
         description: '',
         querystring: {
-          molfile: {
-            type: 'string',
-            description: 'Molfile',
+          type: 'object',
+          properties: {
+            molfile: {
+              type: 'string',
+              description: 'Molfile',
+            },
           },
+          required: ['molfile'],
         },
       },
     },
-    getInfo,
+    async (request, response) => {
+      const db = await getDB();
+      try {
+        const result = await getInfoFromMolfile(request.query.molfile, db);
+        return await response.send({ result });
+      } catch (error: unknown) {
+        request.log.error(error);
+        return response.send({ result: {}, log: error?.toString() });
+      }
+    },
   );
-}
-
-async function getInfo(request: FastifyRequest, response: FastifyReply) {
-  const body: any = request.query;
-  const db = await getDB();
-  try {
-    const result = await getInfoFromMolfile(body.molfile, db);
-    return await response.send({ result });
-  } catch (error: any) {
-    debug(`Error: ${error.stack}`);
-    return response.send({ result: {}, log: error.toString() });
-  }
 }

@@ -1,6 +1,5 @@
-import debugLibrary from 'debug';
 import { Molecule } from 'openchemlib';
-
+import pino from 'pino';
 //@ts-expect-error sdf-parser is not typed
 import { parse } from 'sdf-parser';
 
@@ -9,7 +8,7 @@ import type { DB } from '../db/getDB.ts';
 import idCodeIsPresent from '../db/idCodeIsPresent.ts';
 import { insertInfo } from '../db/insertInfo.ts';
 
-const debug = debugLibrary('appendSDF');
+const logger = pino({ messageKey: 'appendSDF' });
 
 export async function appendSDF(text: string, db: DB) {
   let existingMolecules = 0;
@@ -17,11 +16,11 @@ export async function appendSDF(text: string, db: DB) {
   let counter = 0;
   const entries = parse(text).molecules;
 
-  debug('Start append');
+  logger.info('Start append');
   for (const entry of entries) {
     counter++;
     if (counter % 1000 === 0) {
-      debug(
+      logger.info(
         `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
       );
     }
@@ -38,16 +37,16 @@ export async function appendSDF(text: string, db: DB) {
           insertInfo(info, db);
         })
         .catch((error: unknown) => {
-          console.log(error?.toString());
+          logger.error(error);
         });
-    } catch (error: any) {
-      debug(`Error parsing molfile: ${error.toString()}`);
+    } catch (error: unknown) {
+      logger.error(error, `Error parsing molfile: ${entry.molfile}`);
       continue;
     }
     newMolecules++;
   }
-  debug(`Existing molecules: ${existingMolecules}`);
-  debug(`New molecules: ${newMolecules}`);
+  logger.info(`Existing molecules: ${existingMolecules}`);
+  logger.info(`New molecules: ${newMolecules}`);
 
-  debug('End append');
+  logger.info('End append');
 }

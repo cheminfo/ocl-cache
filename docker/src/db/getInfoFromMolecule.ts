@@ -1,5 +1,5 @@
-import debugLibrary from 'debug';
 import type { Molecule } from 'openchemlib';
+import pino from 'pino';
 
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
@@ -7,8 +7,14 @@ import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
 import type { DB } from './getDB.ts';
 import { insertMolecule } from './insertMolecule.ts';
 
-const debug = debugLibrary('getInfoFromMolecule');
+const logger = pino({ messageKey: 'getInfoFromMolecule' });
 
+/**
+ * Return information for a molecule from an instance of OCL Molecule
+ * @param molecule - instance of OCL Molecule
+ * @param db
+ * @returns
+ */
 export async function getInfoFromMolecule(
   molecule: Molecule,
   db: DB,
@@ -17,7 +23,7 @@ export async function getInfoFromMolecule(
   const resultFromDB = db.searchIDCode.get(idCode);
 
   if (resultFromDB) {
-    debug('in cache');
+    logger.trace('in cache');
     return dbInfoToMoleculeInfo(resultFromDB);
   }
   return insertMolecule(idCode, db);

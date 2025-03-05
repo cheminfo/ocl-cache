@@ -13,4 +13,10 @@ export default [
       'no-await-in-loop': 'off',
     },
   },
+  {
+    files: ['**/__tests__/**/*.{js,ts}'],
+    rules: {
+      '@typescript-eslint/no-floating-promises': 'off',
+    },
+  },
 ];

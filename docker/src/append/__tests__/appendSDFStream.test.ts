@@ -1,10 +1,11 @@
-import { test } from 'node:test';
-import { jestExpect as expect } from '@jest/expect';
-import { readFile } from 'node:fs/promises';
+import { openAsBlob } from 'node:fs';
 import { join } from 'node:path';
+import { test } from 'node:test';
+
+import { jestExpect as expect } from '@jest/expect';
+
 import { getTempDB } from '../../db/getDB.ts';
 import { appendSDFStream } from '../appendSDFStream.ts';
-import { openAsBlob } from 'node:fs';
 
 test('appendSDFStream', async () => {
   const file = await openAsBlob(join(import.meta.dirname, 'diol.sdf'));

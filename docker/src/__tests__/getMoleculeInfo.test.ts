@@ -1,6 +1,7 @@
-import { Molecule } from 'openchemlib';
 import { test } from 'node:test';
+
 import { jestExpect as expect } from '@jest/expect';
+import { Molecule } from 'openchemlib';
 
 import calculateMoleculeInfo from '../calculate/calculateMoleculeInfo.ts';
 
@@ -18,14 +19,14 @@ test('getMoleculeInfo', () => {
     charge: -1,
     donorCount: 0,
     em: 122.04537245894,
-    idCode: 'gOQIHH\`\\\`lkU@LRv@',
+    idCode: 'gOQIHH`\\`lkU@LRv@',
     logP: 1.2873999774456024,
     logS: -1.4459999836981297,
     mf: 'C4[13C]H10O.Cl(-1)',
     mw: 122.57804846949503,
     nbFragments: 2,
-    noStereoID: 'gOQIHH\`\\\`lkU@LRv@',
-    noStereoTautomerID: 'gOQIHH\`\\\`lmU@\\RvE\\LSBq~drUL_CGpp',
+    noStereoID: 'gOQIHH`\\`lkU@LRv@',
+    noStereoTautomerID: 'gOQIHH`\\`lmU@\\RvE\\LSBq~drUL_CGpp',
     polarSurfaceArea: 17.06999969482422,
     rotatableBondCount: 2,
     ssIndex: Int32Array.from([

@@ -3,12 +3,13 @@ import { join } from 'node:path';
 
 import sqLite from 'better-sqlite3';
 import type { Database, Statement } from 'better-sqlite3';
-import debugLibrary from 'debug';
+import pino from 'pino';
 import Postgrator from 'postgrator';
 
 import type { DBMoleculeInfo } from '../MoleculeInfo.ts';
 
-const debug = debugLibrary('getDB');
+const logger = pino({ messageKey: 'getDB' });
+
 let db: Database;
 
 /**
@@ -33,7 +34,7 @@ export default async function getDB(): Promise<DB> {
           if (err.code !== 'ENOENT') throw err;
         } else if (stat.size > 100000000) {
           db.pragma('wal_checkpoint(RESTART)');
-          debug('Restarted wal file');
+          logger.info('Restarted wal file');
         }
       });
     }, 300000).unref();
@@ -85,6 +86,9 @@ export async function prepareDB(db: Database): Promise<void> {
   await postgrator.migrate();
 }
 
+/**
+ * Class that represents the database and all its statements
+ */
 export class DB {
   db: Database;
   stmt: Record<string, Statement>;
