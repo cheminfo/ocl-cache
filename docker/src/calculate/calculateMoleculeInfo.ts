@@ -63,13 +63,14 @@ function getNoStereoTautomerIDCode(molecule: Molecule) {
   );
 }
 
-function getSSIndex(molecule: Molecule): Int32Array {
-  return Int32Array.from(molecule.getIndex());
+function getSSIndex(molecule: Molecule): number[] {
+  // remove some other properties present in the index
+  return [...molecule.getIndex()];
 }
 
 function getProperties(molecule: Molecule) {
   const moleculeProperties = new MoleculeProperties(molecule);
-  const fragmentMap: any[] = [];
+  const fragmentMap: number[] = [];
   const nbFragments = molecule.getFragmentNumbers(fragmentMap, false, false);
 
   return {

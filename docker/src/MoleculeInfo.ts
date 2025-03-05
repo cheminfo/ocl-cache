@@ -6,7 +6,7 @@ export interface MoleculeInfo {
   idCode: string;
   noStereoID: string;
   noStereoTautomerID: string;
-  ssIndex: Int32Array;
+  ssIndex: number[];
   logS: number;
   logP: number;
   acceptorCount: number;

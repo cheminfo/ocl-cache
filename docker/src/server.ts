@@ -4,7 +4,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import createFastify from 'fastify';
 
-import v1 from './v1/v1.js';
+import v1 from './v1/v1.ts';
 
 const devLogger = {
   level: 'info',

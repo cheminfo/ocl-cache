@@ -14,7 +14,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib ",
-    "dev": "npm run tsc && DEBUG=* node ./lib/server.js",
+    "dev": "node --watch --experimental-strip-types --disable-warning=ExperimentalWarning ./src/server.ts",
     "eslint": "eslint src --cache",
     "eslint-fix": "npm run eslint -- --fix",
     "processSmiles": "tsc && DEBUG=* node scripts/processSmiles.mjs",
@@ -67,5 +67,8 @@
     "piscina": "^4.8.0",
     "postgrator": "^8.0.0",
     "sdf-parser": "^7.0.3"
+  },
+  "volta": {
+    "node": "22.14.0"
   }
 }

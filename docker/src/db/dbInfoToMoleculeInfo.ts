@@ -17,6 +17,6 @@ export function dbInfoToMoleculeInfo(data: DBMoleculeInfo): MoleculeInfo {
   return {
     ...rest,
     atoms: deserialize(data.atoms),
-    ssIndex: new Int32Array(new Uint8Array(data.ssIndex).buffer),
+    ssIndex: Array.from(new Int32Array(new Uint8Array(data.ssIndex).buffer)),
   };
 }

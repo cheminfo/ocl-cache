@@ -1,9 +1,9 @@
 import { Molecule } from 'openchemlib';
 
-import type { MoleculeInfo } from '../MoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-import type { DB } from './getDB';
-import { getInfoFromMolecule } from './getInfoFromMolecule';
+import type { DB } from './getDB.ts';
+import { getInfoFromMolecule } from './getInfoFromMolecule.ts';
 
 /**
  * Return information for a molecule from its molfile

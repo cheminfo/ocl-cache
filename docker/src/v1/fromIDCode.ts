@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify/types/instance';
 
-import { getInfoFromIDCode } from '../db/getInfoFromIDCode';
+import { getInfoFromIDCode } from '../db/getInfoFromIDCode.ts';
 
 export default function fromIDCode(fastify: FastifyInstance) {
   fastify.get<{ Querystring: { idCode: string } }>(

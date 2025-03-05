@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify/types/instance';
 
-import getDB from '../db/getDB';
-import { getInfoFromMolfile } from '../db/getInfoFromMolfile';
+import getDB from '../db/getDB.ts';
+import { getInfoFromMolfile } from '../db/getInfoFromMolfile.ts';
 
 export default function fromMolfile(fastify: FastifyInstance) {
   fastify.get<{ Querystring: { molfile: string } }>(

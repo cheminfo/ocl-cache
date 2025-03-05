@@ -26,9 +26,7 @@ test('will test if data are the same with cache or without cache', async () => {
     rotatableBondCount: 2,
     stereoCenterCount: 0,
     polarSurfaceArea: 9.229999542236328,
-    ssIndex: Int32Array.from([
-      -95943616, 512, 1048576, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ]),
+    ssIndex: [-95943616, 512, 1048576, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     unsaturation: 0,
     atoms: { C: 4, H: 10, O: 1 },
   };

@@ -32,10 +32,10 @@ test('should first', () => {
     noStereoTautomerID: 'gGP@DiVj`@',
     polarSurfaceArea: 0,
     rotatableBondCount: 3,
-    ssIndex: Int32Array.from([
+    ssIndex: [
       1652621312, 134217728, 33554432, 0, 16777216, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0,
-    ]),
+    ],
     stereoCenterCount: 0,
     unsaturation: 0,
   });

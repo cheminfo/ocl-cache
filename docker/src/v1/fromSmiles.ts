@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify/types/instance';
 
-import getDB from '../db/getDB';
-import { getInfoFromSmiles } from '../db/getInfoFromSmiles';
+import getDB from '../db/getDB.ts';
+import { getInfoFromSmiles } from '../db/getInfoFromSmiles.ts';
 
 export default function fromSmiles(fastify: FastifyInstance) {
   fastify.get<{ Querystring: { smiles: string } }>(

@@ -23,7 +23,9 @@ export function insertInfo(info: MoleculeInfo, db: DB) {
   // 2. Need to store the ssIndex as a blob
 
   // in the DB we prefer to store int64 in order to make substructure preindex search in the future
-  const ssIndex64 = new BigInt64Array(info.ssIndex.buffer);
+  const ssIndex = Int32Array.from(info.ssIndex);
+
+  const ssIndex64 = new BigInt64Array(ssIndex.buffer);
   const ssIndexes: SSIndexes = {
     ssIndex0: ssIndex64[0],
     ssIndex1: ssIndex64[1],
@@ -37,7 +39,7 @@ export function insertInfo(info: MoleculeInfo, db: DB) {
 
   const stmtData: DBMoleculeInfo = {
     ...info,
-    ssIndex: new Uint8Array(info.ssIndex.buffer),
+    ssIndex: new Uint8Array(Int32Array.from(info.ssIndex).buffer),
     atoms: serialize(info.atoms),
     ...ssIndexes,
   };

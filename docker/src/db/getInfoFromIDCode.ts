@@ -1,10 +1,10 @@
 import pino from 'pino';
 
-import type { MoleculeInfo } from '../MoleculeInfo';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
-import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo';
-import getDB from './getDB';
-import { insertMolecule } from './insertMolecule';
+import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
+import getDB from './getDB.ts';
+import { insertMolecule } from './insertMolecule.ts';
 
 const logger = pino({ messageKey: 'getInfoFromIDCode' });
 /**

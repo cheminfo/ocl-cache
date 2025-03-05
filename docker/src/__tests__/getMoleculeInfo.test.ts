@@ -29,10 +29,10 @@ test('getMoleculeInfo', () => {
     noStereoTautomerID: 'gOQIHH`\\`lmU@\\RvE\\LSBq~drUL_CGpp',
     polarSurfaceArea: 17.06999969482422,
     rotatableBondCount: 2,
-    ssIndex: Int32Array.from([
+    ssIndex: [
       1938039312, 671088768, 167772192, 268435456, 16384, 128, 0, 0, 0, 0, 0, 0,
       32, 0, 0, 0,
-    ]),
+    ],
     stereoCenterCount: 0,
     unsaturation: 2,
   });
@@ -60,9 +60,7 @@ test('calculateMoleculeInfo CCC', () => {
     noStereoTautomerID: 'eM@Hz@',
     polarSurfaceArea: 0,
     rotatableBondCount: 0,
-    ssIndex: Int32Array.from([
-      1082130432, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ]),
+    ssIndex: [1082130432, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     stereoCenterCount: 0,
     unsaturation: 0,
   });
