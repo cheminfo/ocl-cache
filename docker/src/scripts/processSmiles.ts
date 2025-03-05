@@ -11,7 +11,7 @@ const logger = pino({ messageKey: 'processSmiles' });
 
 const fileCollection = new FileCollection();
 await fileCollection.appendPath(
-  join(import.meta.dirname, '../smiles/to_process'),
+  join(import.meta.dirname, '../../smiles/to_process'),
 );
 
 const db = await getDB();

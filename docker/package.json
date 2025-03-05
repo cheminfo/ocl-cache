@@ -13,19 +13,16 @@
   ],
   "scripts": {
     "check-types": "tsc --noEmit",
-    "clean": "rimraf lib ",
     "dev": "node --watch --experimental-strip-types --disable-warning=ExperimentalWarning ./src/server.ts",
     "eslint": "eslint src --cache",
     "eslint-fix": "npm run eslint -- --fix",
-    "processSmiles": "tsc && DEBUG=* node scripts/processSmiles.mjs",
-    "processSDF": "tsc && DEBUG=* node scripts/processSDF",
-    "prepack": "npm run tsc",
+    "processSmiles": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/scripts/processSmiles.ts | pino-pretty",
+    "processSDF": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/scripts/processSDF.ts | pino-pretty",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
-    "start": "npm run tsc && node ./lib/server.js",
+    "start": "node --experimental-strip-types --disable-warning=ExperimentalWarning ./src/server.js",
     "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
-    "test-only": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning",
-    "tsc": "npm run clean && tsc"
+    "test-only": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning"
   },
   "repository": {
     "type": "git",

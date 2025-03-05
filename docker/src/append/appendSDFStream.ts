@@ -15,15 +15,15 @@ export async function appendSDFStream(stream: ReadableStream, db: DB) {
   let counter = 0;
 
   logger.info('Start append');
+  const textDecoder = new TextDecoderStream();
 
-  for await (const entry of iterator(stream)) {
+  for await (const entry of iterator(stream.pipeThrough(textDecoder))) {
     counter++;
     if (counter % 1000 === 0) {
       logger.info(
         `Existing molecules: ${existingMolecules} - New molecules: ${newMolecules}`,
       );
     }
-
     try {
       const idCode = Molecule.fromMolfile(entry.molfile).getIDCode();
       if (idCodeIsPresent(idCode, db)) {
@@ -31,7 +31,7 @@ export async function appendSDFStream(stream: ReadableStream, db: DB) {
         continue;
       }
       const { promise } = await calculateMoleculeInfoFromIDCodePromise(idCode);
-      await promise
+      promise
         .then((info) => {
           insertInfo(info, db);
         })

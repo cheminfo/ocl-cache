@@ -8,7 +8,7 @@ import pino from 'pino';
 import getDB from '../db/getDB.ts';
 import { appendSDFStream } from '../index.ts';
 
-const sdfDir = join(import.meta.dirname, '../sdf/to_process');
+const sdfDir = join(import.meta.dirname, '../../sdf/to_process');
 const logger = pino({ messageKey: 'processSDF' });
 
 logger.info(`Checking for SDF files in: ${sdfDir}`);
@@ -22,7 +22,6 @@ while (true) {
   for (const file of fileCollection) {
     wasWaiting = false;
     logger.info(`Importing: ${file.name}`);
-
     await appendSDFStream(file.stream(), db);
     const sourceFile = fileCollection.sources.find(
       (source) => source.uuid === file.sourceUUID,
