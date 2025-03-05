@@ -1,4 +1,3 @@
-import type { Database } from 'better-sqlite3';
 import { Molecule } from 'openchemlib';
 
 import type { MoleculeInfo } from '../MoleculeInfo';

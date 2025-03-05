@@ -1,14 +1,13 @@
-import type { Statement , Database } from 'better-sqlite3';
-import Debug from 'debug';
+import debugLibrary from 'debug';
 import type { Molecule } from 'openchemlib';
 
-import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';
+import type { MoleculeInfo } from '../MoleculeInfo.ts';
 
 import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo.ts';
 import type { DB } from './getDB.ts';
 import { insertMolecule } from './insertMolecule.ts';
 
-const debug = Debug('getInfoFromMolecule');
+const debug = debugLibrary('getInfoFromMolecule');
 
 export async function getInfoFromMolecule(
   molecule: Molecule,

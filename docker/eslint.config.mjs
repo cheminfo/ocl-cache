@@ -9,6 +9,8 @@ export default [
         ...globals.node,
       },
     },
-    rules: {}
-  }
-]
+    rules: {
+      'no-await-in-loop': 'off',
+    },
+  },
+];

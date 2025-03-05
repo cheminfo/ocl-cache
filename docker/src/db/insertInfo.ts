@@ -1,4 +1,3 @@
-import type { Database, Statement } from 'better-sqlite3';
 import { serialize } from 'bson';
 
 import type { DBMoleculeInfo, MoleculeInfo } from '../MoleculeInfo.ts';

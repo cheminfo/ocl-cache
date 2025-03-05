@@ -1,5 +1,3 @@
-import type { Database, Statement } from 'better-sqlite3';
-
 import type { MoleculeInfo } from '../MoleculeInfo.ts';
 import calculateMoleculeInfoFromIDCodePromise from '../calculate/calculateMoleculeInfoFromIDCodePromise.ts';
 

@@ -38,8 +38,8 @@ export async function appendSDFStream(stream: ReadableStream, db: DB) {
         .then((info) => {
           insertInfo(info, db);
         })
-        .catch((error) => {
-          console.log(error.toString());
+        .catch((error: error) => {
+          console.log(error?.toString());
         });
     } catch (error: any) {
       debug(`Error parsing molfile: ${error.toString()}`);

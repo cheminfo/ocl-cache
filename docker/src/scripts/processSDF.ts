@@ -1,7 +1,6 @@
-import { renameSync, ReadStream } from 'node:fs';
+import { renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-
 
 import debugLib from 'debug';
 import { FileCollection } from 'file-collection';
@@ -29,7 +28,11 @@ while (true) {
       (source) => source.uuid === file.sourceUUID,
     );
     if (sourceFile?.relativePath) {
-      const path = join(import.meta.dirname, '../sdf/', sourceFile.relativePath);
+      const path = join(
+        import.meta.dirname,
+        '../sdf/',
+        sourceFile.relativePath,
+      );
       renameSync(path, path.replace('to_process', 'processed'));
     }
   }

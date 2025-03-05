@@ -37,8 +37,8 @@ export async function appendSDF(text: string, db: DB) {
         .then((info) => {
           insertInfo(info, db);
         })
-        .catch((error) => {
-          console.log(error.toString());
+        .catch((error: unknown) => {
+          console.log(error?.toString());
         });
     } catch (error: any) {
       debug(`Error parsing molfile: ${error.toString()}`);

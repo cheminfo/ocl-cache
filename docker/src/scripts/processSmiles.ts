@@ -10,7 +10,9 @@ import { appendSmiles } from '../index.ts';
 const debug = debugLib('processSmiles');
 
 const fileCollection = new FileCollection();
-fileCollection.appendPath(join(import.meta.dirname, '../smiles/to_process'));
+await fileCollection.appendPath(
+  join(import.meta.dirname, '../smiles/to_process'),
+);
 
 const db = await getDB();
 

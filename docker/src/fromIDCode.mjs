@@ -1,10 +1,8 @@
 import { readFileSync } from 'node:fs';
 
-import pkg from 'openchemlib';
+import { Molecule } from 'openchemlib';
 
 async function doAll() {
-  const { Molecule } = pkg;
-
   const smiles = readFileSync('../../benchmark/smiles.txt', 'utf8')
     .split(/\r?\n/)
     .slice(0, 500);
@@ -23,7 +21,6 @@ async function doAll() {
     const data = await response.json();
     let end = performance.now();
     //    console.timeEnd('one smiles');
-
     sum += end - start;
   }
   console.log('Average time:', sum / smiles.length);

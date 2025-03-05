@@ -1,8 +1,6 @@
-import { Statement } from 'better-sqlite3';
 import debugLibrary from 'debug';
 
 import type { MoleculeInfo } from '../MoleculeInfo';
-import { DBMoleculeInfo } from '../MoleculeInfo';
 
 import { dbInfoToMoleculeInfo } from './dbInfoToMoleculeInfo';
 import getDB from './getDB';
