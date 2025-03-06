@@ -6,6 +6,7 @@ export interface MoleculeInfo {
   idCode: string;
   noStereoID: string;
   noStereoTautomerID: string;
+  failedTautomerID: 0 | 1; // if failed we use noStereoID
   ssIndex: number[];
   logS: number;
   logP: number;

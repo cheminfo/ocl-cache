@@ -29,12 +29,12 @@ export default async function calculateMoleculeInfoFromIDCodePromise(
   idCode: string,
 ): Promise<{ promise: Promise<MoleculeInfo> }> {
   const abortController = new AbortController();
-  const timeout = setTimeout(() => abortController.abort(), 60000);
 
   // if in the queue we have over twice the number of cpu we wait
   while (piscina.queueSize > nbCPU * 2) {
     await delay(1);
   }
+  const timeout = setTimeout(() => abortController.abort(), 60000);
   let promise;
   try {
     promise = piscina

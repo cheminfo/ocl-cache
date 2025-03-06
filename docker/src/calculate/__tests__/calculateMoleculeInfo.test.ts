@@ -30,6 +30,7 @@ test('should first', () => {
     nbFragments: 1,
     noStereoID: 'gGP@DiVj`@',
     noStereoTautomerID: 'gGP@DiVj`@',
+    failedTautomerID: 0,
     polarSurfaceArea: 0,
     rotatableBondCount: 3,
     ssIndex: [

@@ -100,7 +100,7 @@ export class DB {
     this.db = db;
     this.stmt = {};
     this.insertInfo = this.db.prepare(
-      'INSERT INTO molecules VALUES (@idCode, @mf, @em, @mw, @charge, @noStereoID, @noStereoTautomerID, @logS, @logP, @acceptorCount, @donorCount, @rotatableBondCount, @stereoCenterCount, @polarSurfaceArea, @nbFragments , @unsaturation, @atoms, @ssIndex, @ssIndex0, @ssIndex1, @ssIndex2, @ssIndex3, @ssIndex4, @ssIndex5, @ssIndex6, @ssIndex7)',
+      'INSERT INTO molecules VALUES (@idCode, @mf, @em, @mw, @charge, @noStereoID, @noStereoTautomerID, @failedTautomerID, @logS, @logP, @acceptorCount, @donorCount, @rotatableBondCount, @stereoCenterCount, @polarSurfaceArea, @nbFragments , @unsaturation, @atoms, @ssIndex, @ssIndex0, @ssIndex1, @ssIndex2, @ssIndex3, @ssIndex4, @ssIndex5, @ssIndex6, @ssIndex7)',
     );
     this.selectAllIDCode = this.db.prepare('SELECT idCode FROM molecules ');
     this.searchIDCode = this.db.prepare(

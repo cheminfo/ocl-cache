@@ -27,6 +27,7 @@ test('getMoleculeInfo', () => {
     nbFragments: 2,
     noStereoID: 'gOQIHH`\\`lkU@LRv@',
     noStereoTautomerID: 'gOQIHH`\\`lmU@\\RvE\\LSBq~drUL_CGpp',
+    failedTautomerID: 0,
     polarSurfaceArea: 17.06999969482422,
     rotatableBondCount: 2,
     ssIndex: [
@@ -58,6 +59,7 @@ test('calculateMoleculeInfo CCC', () => {
     nbFragments: 1,
     noStereoID: 'eM@Hz@',
     noStereoTautomerID: 'eM@Hz@',
+    failedTautomerID: 0,
     polarSurfaceArea: 0,
     rotatableBondCount: 0,
     ssIndex: [1082130432, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

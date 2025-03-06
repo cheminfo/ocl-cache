@@ -28,6 +28,7 @@ test('appendSmilesStream', async () => {
     charge: 0,
     noStereoID: 'eM@Hz@',
     noStereoTautomerID: 'eM@Hz@',
+    failedTautomerID: 0,
     logS: -1.2539999783039093,
     logP: 1.4315999746322632,
     acceptorCount: 0,

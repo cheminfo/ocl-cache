@@ -19,6 +19,7 @@ test('will test if data are the same with cache or without cache', async () => {
     charge: 0,
     noStereoID: 'gJQ@@eKU@@',
     noStereoTautomerID: 'gJQ@@eKU@@',
+    failedTautomerID: 0,
     logS: -0.9049999713897705,
     logP: 0.8846999406814575,
     acceptorCount: 1,

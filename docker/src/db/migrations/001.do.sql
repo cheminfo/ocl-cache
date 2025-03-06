@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS molecules (
   charge data_type INT,
   noStereoID data_type TEXT,
   noStereoTautomerID data_type TEXT,
+  failedTautomerID data_type BOOLEAN,
   logS data_type REAL,
   logP data_type REAL,
   acceptorCount data_type INT,

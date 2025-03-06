@@ -37,12 +37,7 @@ export default function calculateMoleculeInfo(
     unsaturation: mfInfo.unsaturation,
     idCode,
     noStereoID,
-    noStereoTautomerID: getNoStereoTautomerIfSmall(
-      mfInfo,
-      molecule,
-      noStereoID,
-      ignoreTautomer,
-    ),
+    ...getNoStereoTautomerIfSmall(mfInfo, molecule, noStereoID, ignoreTautomer),
     ...getProperties(molecule),
     ssIndex: getSSIndex(molecule),
   };
@@ -50,12 +45,12 @@ export default function calculateMoleculeInfo(
   return info;
 }
 
-function getNoStereoIDCode(molecule: Molecule) {
+function getNoStereoIDCode(molecule: Molecule): string {
   molecule.stripStereoInformation();
   return molecule.getIDCode();
 }
 
-function getNoStereoTautomerIDCode(molecule: Molecule) {
+function getNoStereoTautomerIDCode(molecule: Molecule): string {
   const OCL = molecule.getOCL();
   return OCL.CanonizerUtil.getIDCode(
     molecule,
@@ -90,10 +85,10 @@ function getNoStereoTautomerIfSmall(
   molecule: Molecule,
   noStereoID: string,
   ignoreTautomer: boolean,
-) {
+): { noStereoTautomerID: string; failedTautomerID: 0 | 1 } {
   if (ignoreTautomer) {
     logger.trace(`Ignore tautomer: ${mfInfo.mf}, ${molecule.getIDCode()}`);
-    return noStereoID;
+    return { noStereoTautomerID: noStereoID, failedTautomerID: 1 };
   }
 
   let small = true;
@@ -106,9 +101,12 @@ function getNoStereoTautomerIfSmall(
   }
 
   if (small) {
-    return getNoStereoTautomerIDCode(molecule);
+    return {
+      noStereoTautomerID: getNoStereoTautomerIDCode(molecule),
+      failedTautomerID: 0,
+    };
   } else {
     logger.trace(`Too big: ${mfInfo.mf}, ${molecule.getIDCode()}`);
-    return noStereoID;
+    return { noStereoTautomerID: noStereoID, failedTautomerID: 1 };
   }
 }

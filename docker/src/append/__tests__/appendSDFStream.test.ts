@@ -44,6 +44,7 @@ test('appendSDFStream compressed file', async () => {
     charge: 0,
     noStereoID: 'gJQDD@`pBSMT@qB`@',
     noStereoTautomerID: 'gJQDD@`pBSMT@qB`@',
+    failedTautomerID: 0,
     logS: -1.2719999626278877,
     logP: 0.04909995198249817,
     acceptorCount: 1,
