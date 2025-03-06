@@ -9,7 +9,14 @@ import { appendStream } from './appendStream.ts';
 const logger = pino({ messageKey: 'appendSmilesStream' });
 export async function appendSmilesStream(stream: ReadableStream, db: DB) {
   logger.info('Appending SMILES stream');
-  await appendStream(stream.pipeThrough(new LineStream()), db, {
-    getMolecule: (entry: string) => Molecule.fromSmiles(entry),
-  });
+
+  const textDecoderStream = new TextDecoderStream();
+
+  await appendStream(
+    stream.pipeThrough(textDecoderStream).pipeThrough(new LineStream()),
+    db,
+    {
+      getMolecule: (entry: string) => Molecule.fromSmiles(entry),
+    },
+  );
 }

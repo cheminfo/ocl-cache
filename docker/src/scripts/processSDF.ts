@@ -16,11 +16,9 @@ logger.info(`Checking for SDF files in: ${sdfDir}`);
 const db = await getDB();
 
 while (true) {
-  let wasWaiting = true;
   const fileCollection = new FileCollection();
   await fileCollection.appendPath(sdfDir);
   for (const file of fileCollection) {
-    wasWaiting = false;
     logger.info(`Importing: ${file.name}`);
     await appendSDFStream(file.stream(), db);
     const sourceFile = fileCollection.sources.find(
@@ -35,10 +33,6 @@ while (true) {
       renameSync(path, path.replace('to_process', 'processed'));
     }
   }
-  if (wasWaiting) {
-    logger.info('Waiting for new SDF files');
-    wasWaiting = true;
-  }
-
+  logger.trace('Waiting for new SDF files');
   await delay(10000);
 }

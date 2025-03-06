@@ -12,9 +12,7 @@ test('appendIDCodeStream', async () => {
 
   const db = await getTempDB();
 
-  const textDecoderStream = new TextDecoderStream();
-
-  await appendIDCodeStream(blob.stream().pipeThrough(textDecoderStream), db);
+  await appendIDCodeStream(blob.stream(), db);
 
   const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([

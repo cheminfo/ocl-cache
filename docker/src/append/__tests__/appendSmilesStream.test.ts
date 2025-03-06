@@ -10,10 +10,8 @@ import { appendSmilesStream } from '../appendSmilesStream.ts';
 test('appendSmilesStream', async () => {
   const blob = await openAsBlob(join(import.meta.dirname, 'smiles.txt'));
 
-  const textDecoderStream = new TextDecoderStream();
-
   const db = await getTempDB();
-  await appendSmilesStream(blob.stream().pipeThrough(textDecoderStream), db);
+  await appendSmilesStream(blob.stream(), db);
 
   const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([

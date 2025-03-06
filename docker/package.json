@@ -20,7 +20,7 @@
     "processSDF": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/scripts/processSDF.ts | pino-pretty",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
-    "start": "node --experimental-strip-types --disable-warning=ExperimentalWarning ./src/server.js",
+    "start": "node --experimental-strip-types --disable-warning=ExperimentalWarning ./src/server.ts",
     "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
     "test-only": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning"
   },

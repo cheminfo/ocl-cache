@@ -7,15 +7,6 @@
 
 This project will cache derived molecule properties like noStereoIDCode, logP, etc in a sqlite3 database.
 
-## Development on Apple Silicon
-
-If you npm configuration contains `ignore-scripts=true` you may have to execute the following commands:
-
-```bash
-cd node_modules/better-sqlite3
-npm run build-release
-```
-
 ## License
 
 [MIT](./LICENSE)

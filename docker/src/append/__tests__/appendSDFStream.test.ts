@@ -9,11 +9,9 @@ import { appendSDFStream } from '../appendSDFStream.ts';
 
 test.only('appendSDFStream', async () => {
   const file = await openAsBlob(join(import.meta.dirname, 'diol.sdf'));
-  const textDecoderStream = new TextDecoderStream();
-  const stream = file.stream().pipeThrough(textDecoderStream);
 
   const db = await getTempDB();
-  await appendSDFStream(stream, db);
+  await appendSDFStream(file.stream(), db);
 
   const result = db.selectAllIDCode.all();
   expect(result).toStrictEqual([
@@ -26,11 +24,7 @@ test.only('appendSDFStream', async () => {
 test('appendSDFStream compressed file', async () => {
   const file = await openAsBlob(join(import.meta.dirname, 'diol.sdf.gz'));
   const decompressionStream = new DecompressionStream('gzip');
-  const textDecoderStream = new TextDecoderStream();
-  const stream = file
-    .stream()
-    .pipeThrough(decompressionStream)
-    .pipeThrough(textDecoderStream);
+  const stream = file.stream().pipeThrough(decompressionStream);
 
   const db = await getTempDB();
   await appendSDFStream(stream, db);

@@ -11,7 +11,13 @@ const logger = pino({ messageKey: 'appendSDFStream' });
 export async function appendSDFStream(stream: ReadableStream, db: DB) {
   logger.info('Appending SDF stream');
 
-  await appendStream(stream.pipeThrough(new MolfileStream()), db, {
-    getMolecule: (entry) => Molecule.fromMolfile(entry),
-  });
+  const textDecoderStream = new TextDecoderStream();
+
+  await appendStream(
+    stream.pipeThrough(textDecoderStream).pipeThrough(new MolfileStream()),
+    db,
+    {
+      getMolecule: (entry) => Molecule.fromMolfile(entry),
+    },
+  );
 }
