@@ -10,7 +10,8 @@ import getDB from '../db/getDB.ts';
 
 const logger = pino({ messageKey: 'processSmiles' });
 
-const smilesDir = join(import.meta.dirname, '../../smiles/to_process');
+const parentDir = join(import.meta.dirname, '../../smiles');
+const smilesDir = join(parentDir, 'to_process');
 
 logger.info(`Checking for SMILES files in: ${smilesDir}`);
 
@@ -26,6 +27,11 @@ while (true) {
     const filename = file.relativePath.replace(/\.zip\/.*$/, '.zip');
     renameSync(filename, filename.replace('to_process', 'processed'));
     logger.info(`End importing: ${file.name}`);
+
+    if (file?.relativePath) {
+      const path = join(parentDir, file.relativePath);
+      renameSync(path, path.replace('to_process', 'processed'));
+    }
   }
   logger.trace('Waiting for new SMILES files');
   await delay(10000);

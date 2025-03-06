@@ -8,7 +8,8 @@ import pino from 'pino';
 import getDB from '../db/getDB.ts';
 import { appendSDFStream } from '../index.ts';
 
-const sdfDir = join(import.meta.dirname, '../../sdf/to_process');
+const parentDir = join(import.meta.dirname, '../../sdf');
+const sdfDir = join(parentDir, 'to_process');
 const logger = pino({ messageKey: 'processSDF' });
 
 logger.info(`Checking for SDF files in: ${sdfDir}`);
@@ -25,11 +26,7 @@ while (true) {
       (source) => source.uuid === file.sourceUUID,
     );
     if (sourceFile?.relativePath) {
-      const path = join(
-        import.meta.dirname,
-        '../sdf/',
-        sourceFile.relativePath,
-      );
+      const path = join(parentDir, sourceFile.relativePath);
       renameSync(path, path.replace('to_process', 'processed'));
     }
   }
