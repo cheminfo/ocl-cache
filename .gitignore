@@ -122,7 +122,5 @@ lib-esm
 
 sqlite
 
-to_process
-data
-
+Compound*
 compose.yml

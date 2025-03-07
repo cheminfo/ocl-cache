@@ -26,6 +26,6 @@ services:
         max-size: '50m'
     volumes:
       - ./sqlite:/node/sqlite
-      - ./data/sdf:/node/sdf
-      - ./data/smiles:/node/smiles
+      - ./data/sdf:/node/data/sdf
+      - ./data/smiles:/node/data/smiles
     command: npm run processSDF

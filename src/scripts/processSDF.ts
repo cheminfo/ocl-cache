@@ -1,4 +1,4 @@
-import { renameSync } from 'node:fs';
+import { mkdirSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
@@ -8,7 +8,7 @@ import pino from 'pino';
 import getDB from '../db/getDB.ts';
 import { appendSDFStream } from '../index.ts';
 
-const parentDir = join(import.meta.dirname, '../../sdf');
+const parentDir = join(import.meta.dirname, '../../data/sdf');
 const sdfDir = join(parentDir, 'to_process');
 const logger = pino({ messageKey: 'processSDF' });
 
@@ -22,13 +22,19 @@ while (true) {
   for (const file of fileCollection) {
     logger.info(`Importing: ${file.name}`);
     await appendSDFStream(file.stream(), db);
-    const sourceFile = fileCollection.sources.find(
-      (source) => source.uuid === file.sourceUUID,
+    // in file-collection, content of compressed zip files are appended to the parent file with '/' and content
+    // this code limits zip files to be processed to only one file
+    const sourceFile = join(
+      parentDir,
+      file.parent?.relativePath || file.relativePath,
     );
-    if (sourceFile?.relativePath) {
-      const path = join(parentDir, sourceFile.relativePath);
-      renameSync(path, path.replace('to_process', 'processed'));
-    }
+
+    logger.info(`Moving: ${sourceFile}`);
+    const targetFile = sourceFile.replace('to_process', 'processed');
+    const targetFolder = targetFile.replace(/\/[^/]+$/, '');
+    mkdirSync(targetFolder, { recursive: true });
+    renameSync(sourceFile, sourceFile.replace('to_process', 'processed'));
+    logger.info(`End importing: ${file.name}`);
   }
   logger.trace('Waiting for new SDF files');
   await delay(10000);
