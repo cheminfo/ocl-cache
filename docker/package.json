@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Cache molecule directed information in sqlite3",
   "main": "./src/index.ts",
+  "private": true,
   "type": "module",
   "keywords": [],
   "author": "Luc Patiny",
