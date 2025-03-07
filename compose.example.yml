@@ -1,7 +1,7 @@
 services:
   ocl-cache:
-    build: .
-    #image: ghcr.io/cheminfo/ocl-cache:head
+    #build: .
+    image: ghcr.io/cheminfo/ocl-cache:v1.1.0
     restart: always
     ulimits:
       core: 0
@@ -15,8 +15,8 @@ services:
       - 127.0.0.1:20822:20822
 
   process-sdf:
-    build: .
-    #image: ghcr.io/cheminfo/ocl-cache:head
+    #build: .
+    image: ghcr.io/cheminfo/ocl-cache:v1.1.0
     restart: always
     ulimits:
       core: 0
