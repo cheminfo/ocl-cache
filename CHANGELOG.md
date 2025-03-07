@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.0](https://github.com/cheminfo/ocl-cache/compare/v1.0.0...v1.1.0) (2025-03-07)
+
+
+### Features
+
+* add appendIDCodeStream ([b50db84](https://github.com/cheminfo/ocl-cache/commit/b50db844091d9e313d6f7c735ae7cf5e589cef4c))
+* add docker image builder ([7fef635](https://github.com/cheminfo/ocl-cache/commit/7fef635c542ce04c0653df221776ac71d7979546))
+* add failedTautomerID to be able to recover the failed tautomer ID in the future ([7334e8e](https://github.com/cheminfo/ocl-cache/commit/7334e8e3038ea3106060f912f37e9aeb7b416538))
+
+
+### Bug Fixes
+
+* decode text of stream ([9810ac8](https://github.com/cheminfo/ocl-cache/commit/9810ac8740f68b04a0736d8f84f2aa01e94b2fd0))
+* importation scripts ([a8969b9](https://github.com/cheminfo/ocl-cache/commit/a8969b9b6369e7849d44718a46cc5e07dadb91d1))
+* move imported files ([313ddcf](https://github.com/cheminfo/ocl-cache/commit/313ddcf29e4c1cdaae94d8a34a11fdfbe90cbd82))
+* ssIndex type in a number[] ([bf98135](https://github.com/cheminfo/ocl-cache/commit/bf981354a6a081d9c07ceba8a15ba62a83d4a9d5))
+
 ## 1.0.0 (2025-02-25)
 
 ### Features
