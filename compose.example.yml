@@ -1,6 +1,6 @@
 services:
   ocl-cache:
-    build: ./docker
+    build: .
     #image: ghcr.io/cheminfo/ocl-cache-docker:head
     restart: always
     ulimits:
@@ -15,7 +15,7 @@ services:
       - 127.0.0.1:20822:20822
 
   process-sdf:
-    build: ./docker
+    build: .
     #image: ghcr.io/cheminfo/ocl-cache-docker:head
     restart: always
     ulimits:
