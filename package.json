@@ -1,6 +1,6 @@
 {
   "name": "ocl-cache-docker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "docker web service to cache OCL calculation",
   "private": true
 }
