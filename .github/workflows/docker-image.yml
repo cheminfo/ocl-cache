@@ -15,7 +15,7 @@ concurrency:
 env:
   DOCKER_BUILDKIT: 1
   IMAGE_NAME: ocl-cache
-  IMAGE_ID: ghcr.io/cheminfo/ocl-cache-docker
+  IMAGE_ID: ghcr.io/cheminfo/ocl-cache
 
 jobs:
   build:
