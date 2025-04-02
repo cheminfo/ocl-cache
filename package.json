@@ -9,8 +9,7 @@
   "author": "Luc Patiny",
   "license": "MIT",
   "files": [
-    "src",
-    "lib"
+    "src"
   ],
   "scripts": {
     "check-types": "tsc --noEmit",

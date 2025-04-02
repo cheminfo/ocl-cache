@@ -1,6 +1,6 @@
 FROM node:22
 
-EXPOSE 20808
+EXPOSE 20822
 
 RUN mkdir /node
 

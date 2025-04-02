@@ -12,12 +12,13 @@ services:
     volumes:
       - ./sqlite:/node/sqlite
     networks:
+      - default
       - traefik
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.maygen.rule=Host(`ocl-cache.cheminfo.org`)'
-      - 'traefik.http.routers.maygen.entrypoints=websecure'
-      - 'traefik.http.routers.maygen.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.oclcache.rule=Host(`ocl-cache.cheminfo.org`)'
+      - 'traefik.http.routers.oclcache.entrypoints=websecure'
+      - 'traefik.http.routers.oclcache.tls.certresolver=letsencrypt'
 
   process-sdf:
     #build: .
