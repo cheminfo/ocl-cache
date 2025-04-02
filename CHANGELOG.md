@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cheminfo/ocl-cache/compare/v1.1.0...v1.1.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* export correct port and traefik example ([9032963](https://github.com/cheminfo/ocl-cache/commit/9032963970628dd2be248ddf42bc54e3f9ced71e))
+
 ## [1.1.0](https://github.com/cheminfo/ocl-cache/compare/v1.0.0...v1.1.0) (2025-03-07)
 
 
