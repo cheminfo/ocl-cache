@@ -1,9 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { jestExpect as expect } from '@jest/expect';
 import { Molecule } from 'openchemlib';
+import { expect, test } from 'vitest';
 
 import calculateMoleculeInfoFromIDCode from '../calculateMoleculeInfoFromIDCode.ts';
 
@@ -13,6 +12,7 @@ test('should first', () => {
   const molecule = Molecule.fromMolfile(molfile);
   const idCode = molecule.getIDCode();
   const info = calculateMoleculeInfoFromIDCode(idCode);
+
   expect(info).toStrictEqual({
     acceptorCount: 0,
     atoms: {

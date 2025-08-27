@@ -1,13 +1,12 @@
-import { test } from 'node:test';
-
-import { jestExpect as expect } from '@jest/expect';
 import { Molecule } from 'openchemlib';
+import { expect, test } from 'vitest';
 
 import calculateMoleculeInfo from '../calculate/calculateMoleculeInfo.ts';
 
 test('getMoleculeInfo', () => {
   const molecule = Molecule.fromSmiles('CCC(=O)C[13CH3].[Cl-]');
   const info = calculateMoleculeInfo(molecule);
+
   expect(info).toStrictEqual({
     acceptorCount: 1,
     atoms: {
@@ -42,6 +41,7 @@ test('getMoleculeInfo', () => {
 test('calculateMoleculeInfo CCC', () => {
   const molecule = Molecule.fromSmiles('CCC');
   const info = calculateMoleculeInfo(molecule);
+
   expect(info).toStrictEqual({
     acceptorCount: 0,
     atoms: {

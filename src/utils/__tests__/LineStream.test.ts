@@ -1,6 +1,4 @@
-import { test } from 'node:test';
-
-import { jestExpect as expect } from '@jest/expect';
+import { expect, test } from 'vitest';
 
 import { LineStream } from '../LineStream.ts';
 
@@ -19,5 +17,5 @@ test('LineStream', async () => {
     result.push(line);
   }
 
-  expect(result).toEqual(['line1', 'line2', 'line3', 'partial']);
+  expect(result).toStrictEqual(['line1', 'line2', 'line3', 'partial']);
 });

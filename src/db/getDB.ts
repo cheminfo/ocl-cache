@@ -1,8 +1,8 @@
 import fs, { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-import sqLite from 'better-sqlite3';
 import type { Database, Statement } from 'better-sqlite3';
+import sqLite from 'better-sqlite3';
 import pino from 'pino';
 import Postgrator from 'postgrator';
 

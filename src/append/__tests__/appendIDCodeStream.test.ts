@@ -1,13 +1,12 @@
 import { openAsBlob } from 'node:fs';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { jestExpect as expect } from '@jest/expect';
+import { expect, test } from 'vitest';
 
 import { getTempDB } from '../../db/getDB.ts';
 import { appendIDCodeStream } from '../appendIDCodeStream.ts';
 
-test('appendIDCodeStream', async () => {
+test('appendIDCodeStream', { timeout: 30000 }, async () => {
   const blob = await openAsBlob(join(import.meta.dirname, 'idCode.txt'));
 
   const db = await getTempDB();
@@ -15,12 +14,15 @@ test('appendIDCodeStream', async () => {
   await appendIDCodeStream(blob.stream(), db);
 
   const result = db.selectAllIDCode.all();
+
   expect(result).toStrictEqual([
     { idCode: 'eF@Hp@' },
     { idCode: 'eM@Hz@' },
     { idCode: 'fH@@' },
   ]);
+
   const result2 = db.searchIDCode.get('eM@Hz@');
+
   expect(result2).toMatchObject({
     idCode: 'eM@Hz@',
     mf: 'C3H8',

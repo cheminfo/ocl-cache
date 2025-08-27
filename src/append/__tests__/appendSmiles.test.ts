@@ -1,11 +1,9 @@
-import { test } from 'node:test';
-
-import { jestExpect as expect } from '@jest/expect';
+import { expect, test } from 'vitest';
 
 import { getTempDB } from '../../db/getDB.ts';
 import { appendSmiles } from '../appendSmiles.ts';
 
-test('appendSmiles', async () => {
+test('appendSmiles', { timeout: 30000 }, async () => {
   const data = `C
 CC
 CCC`;
@@ -13,6 +11,7 @@ CCC`;
   await appendSmiles(data, db);
 
   const result = db.selectAllIDCode.all();
+
   expect(result).toStrictEqual([
     { idCode: 'eF@Hp@' },
     { idCode: 'eM@Hz@' },

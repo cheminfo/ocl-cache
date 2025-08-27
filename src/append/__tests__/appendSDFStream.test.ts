@@ -1,19 +1,19 @@
 import { openAsBlob } from 'node:fs';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { jestExpect as expect } from '@jest/expect';
+import { expect, test } from 'vitest';
 
 import { getTempDB } from '../../db/getDB.ts';
 import { appendSDFStream } from '../appendSDFStream.ts';
 
-test.only('appendSDFStream', async () => {
+test('appendSDFStream', { timeout: 30000 }, async () => {
   const file = await openAsBlob(join(import.meta.dirname, 'diol.sdf'));
 
   const db = await getTempDB();
   await appendSDFStream(file.stream(), db);
 
   const result = db.selectAllIDCode.all();
+
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },
@@ -30,12 +30,15 @@ test('appendSDFStream compressed file', async () => {
   await appendSDFStream(stream, db);
 
   const result = db.selectAllIDCode.all();
+
   expect(result).toStrictEqual([
     { idCode: 'gCaHD@aIj`@' },
     { idCode: 'gJQDD@`pBSMT@qB`@' },
     { idCode: 'gJQDL@aPBTuT@qD`@' },
   ]);
+
   const result2 = db.searchIDCode.get('gJQDD@`pBSMT@qB`@');
+
   expect(result2).toMatchObject({
     idCode: 'gJQDD@`pBSMT@qB`@',
     mf: 'C2H5[2H]OS',
